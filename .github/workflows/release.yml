@@ -58,16 +58,18 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y cmake ninja-build build-essential libssl-dev \
-            libevent-dev libboost-dev pkg-config python3
+            libevent-dev libboost-dev pkg-config python3 \
+            qt6-base-dev qt6-tools-dev qt6-tools-dev-tools qt6-5compat-dev \
+            libgl1-mesa-dev libqrencode-dev
       - name: Build
         run: |
-          cmake -B build -DBUILD_GUI=OFF -DENABLE_IPC=OFF
-          cmake --build build -j$(nproc) --target bitcoind bitcoin-cli
+          cmake -B build -DBUILD_GUI=ON -DENABLE_IPC=OFF
+          cmake --build build -j$(nproc) --target bitcoin-qt bitcoind bitcoin-cli
       - name: Package
         run: |
-          strip build/bin/friotaiochd build/bin/friotaioch-cli
+          strip build/bin/friotaiochd build/bin/friotaioch-cli build/bin/friotaioch-qt
           mkdir -p Friotaioch-linux64
-          cp build/bin/friotaiochd build/bin/friotaioch-cli README.md COPYING Friotaioch-linux64/
+          cp build/bin/friotaiochd build/bin/friotaioch-cli build/bin/friotaioch-qt README.md COPYING Friotaioch-linux64/
           tar czf Friotaioch-${GITHUB_REF_NAME}-linux64.tar.gz Friotaioch-linux64
       - uses: actions/upload-artifact@v4
         with:
