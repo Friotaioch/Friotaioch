@@ -69,6 +69,35 @@ RPCMethod getnewaddress()
     };
 }
 
+RPCMethod getnewpqraddress()
+{
+    return RPCMethod{
+        "getnewpqraddress",
+        "Returns a new FRIO post-quantum (P2QR, ML-DSA-65 witness v2) receive address.\n",
+        {
+            {"label", RPCArg::Type::STR, RPCArg::Default{""}, "The label to link to this address."},
+            {"version", RPCArg::Type::STR, RPCArg::Default{"2"}, "P2QR witness version: 2 = ML-DSA-65, 3 = SPHINCS+-128s."},
+        },
+        RPCResult{RPCResult::Type::STR, "address", "The new FRIO post-quantum address"},
+        RPCExamples{HelpExampleCli("getnewpqraddress", "") + HelpExampleRpc("getnewpqraddress", "")},
+        [](const RPCMethod& self, const JSONRPCRequest& request) -> UniValue
+{
+    std::shared_ptr<CWallet> const pwallet = GetWalletForJSONRPCRequest(request);
+    if (!pwallet) return UniValue::VNULL;
+    LOCK(pwallet->cs_wallet);
+    const std::string label{LabelFromValue(request.params[0])};
+    int version = 2;
+    if (!request.params[1].isNull()) {
+        version = request.params[1].isStr() ? std::stoi(request.params[1].get_str()) : request.params[1].getInt<int>();
+    }
+    if (version != 2 && version != 3) throw JSONRPCError(RPC_INVALID_PARAMETER, "version must be 2 or 3");
+    auto op_dest = pwallet->GetNewPQRDestination(label, /*v3=*/version == 3);
+    if (!op_dest) throw JSONRPCError(RPC_WALLET_ERROR, util::ErrorString(op_dest).original);
+    return EncodeDestination(*op_dest);
+},
+    };
+}
+
 RPCMethod getrawchangeaddress()
 {
     return RPCMethod{
@@ -349,6 +378,8 @@ public:
     }
 
     UniValue operator()(const WitnessV1Taproot& id) const { return UniValue(UniValue::VOBJ); }
+    UniValue operator()(const WitnessV2PQR& id) const { return UniValue(UniValue::VOBJ); }
+    UniValue operator()(const WitnessV3PQR& id) const { return UniValue(UniValue::VOBJ); }
     UniValue operator()(const PayToAnchor& id) const { return UniValue(UniValue::VOBJ); }
     UniValue operator()(const WitnessUnknown& id) const { return UniValue(UniValue::VOBJ); }
 };

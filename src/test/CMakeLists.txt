@@ -5,6 +5,10 @@
 # Do not use generator expressions in test sources because the
 # SOURCES property is processed to gather test suite macros.
 add_executable(test_bitcoin
+  pqr_spend_tests.cpp
+  pqr_verify_tests.cpp
+  pqr_sighash_tests.cpp
+  pq_tests.cpp
   main.cpp
   addrman_tests.cpp
   allocator_tests.cpp
@@ -160,6 +164,7 @@ target_raw_data_sources(test_bitcoin NAMESPACE test::data
 add_windows_application_manifest(test_bitcoin)
 
 target_link_libraries(test_bitcoin
+    bitcoin_pq
   core_interface
   test_util
   bitcoin_cli

@@ -15,6 +15,11 @@ static const unsigned int MAX_BLOCK_SERIALIZED_SIZE = 4000000;
 static const unsigned int MAX_BLOCK_WEIGHT = 4000000;
 /** The maximum allowed number of signature check operations in a block (network rule) */
 static const int64_t MAX_BLOCK_SIGOPS_COST = 80000;
+/** FRIO: DoS cap on post-quantum signature verifications per block.
+ *  Weighted by scheme cost: ML-DSA-65 (v2) = 1, SPHINCS+-128s (v3) = 4. */
+static const int64_t MAX_BLOCK_PQR_VERIFICATION_COST = 8000;
+static const int64_t PQR_VERIFY_COST_V2 = 1;
+static const int64_t PQR_VERIFY_COST_V3 = 4;
 /** Coinbase transaction outputs can only be spent after this number of new blocks (network rule) */
 static const int COINBASE_MATURITY = 100;
 

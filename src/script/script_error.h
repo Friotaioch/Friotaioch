@@ -70,6 +70,9 @@ typedef enum ScriptError_t
     SCRIPT_ERR_WITNESS_UNEXPECTED,
     SCRIPT_ERR_WITNESS_PUBKEYTYPE,
 
+    /* FRIO post-quantum */
+    SCRIPT_ERR_PQR_SIG_VERIFY,
+
     /* Taproot */
     SCRIPT_ERR_SCHNORR_SIG_SIZE,
     SCRIPT_ERR_SCHNORR_SIG_HASHTYPE,

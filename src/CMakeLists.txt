@@ -66,6 +66,25 @@ else()
   add_library(bitcoin_ipc STATIC EXCLUDE_FROM_ALL ipc/stub.cpp)
 endif()
 
+# FRIO: post-quantum reference libraries (ML-DSA-65 + SPHINCS+ sha2-128s).
+# Third-party vendored sources: GLOB the pruned set, warnings suppressed, params pinned.
+file(GLOB FRIO_PQ_MLDSA CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/crypto/pq/mldsa65/*.c)
+file(GLOB FRIO_PQ_SPHINCS CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/crypto/pq/sphincsplus/*.c)
+add_library(bitcoin_pq STATIC EXCLUDE_FROM_ALL
+  ${FRIO_PQ_MLDSA}
+  ${FRIO_PQ_SPHINCS}
+  crypto/pq/pq_randombytes.cpp
+  crypto/pq/pq.cpp
+)
+target_include_directories(bitcoin_pq PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/crypto/pq/mldsa65
+  ${CMAKE_CURRENT_SOURCE_DIR}/crypto/pq/sphincsplus
+)
+target_compile_definitions(bitcoin_pq PRIVATE DILITHIUM_MODE=3 PARAMS=sphincs-sha2-128s)
+target_compile_options(bitcoin_pq PRIVATE -w)
+target_link_libraries(bitcoin_pq PRIVATE core_interface)
+
 add_library(bitcoin_consensus STATIC EXCLUDE_FROM_ALL
   arith_uint256.cpp
   consensus/merkle.cpp
@@ -84,6 +103,7 @@ target_link_libraries(bitcoin_consensus
     core_interface
     bitcoin_crypto
     secp256k1
+    bitcoin_pq
 )
 
 if(WITH_ZMQ)
@@ -430,4 +450,27 @@ endif()
 
 if(BUILD_FUZZ_BINARY)
   add_subdirectory(test/fuzz)
+endif()
+
+# FRIO: emitted-binary names (targets unchanged to preserve link/install refs)
+if(TARGET bitcoind)
+  set_target_properties(bitcoind PROPERTIES OUTPUT_NAME "friotaiochd")
+endif()
+if(TARGET bitcoin-cli)
+  set_target_properties(bitcoin-cli PROPERTIES OUTPUT_NAME "friotaioch-cli")
+endif()
+if(TARGET bitcoin-tx)
+  set_target_properties(bitcoin-tx PROPERTIES OUTPUT_NAME "friotaioch-tx")
+endif()
+if(TARGET bitcoin-util)
+  set_target_properties(bitcoin-util PROPERTIES OUTPUT_NAME "friotaioch-util")
+endif()
+if(TARGET bitcoin-wallet)
+  set_target_properties(bitcoin-wallet PROPERTIES OUTPUT_NAME "friotaioch-wallet")
+endif()
+if(TARGET bitcoin-node)
+  set_target_properties(bitcoin-node PROPERTIES OUTPUT_NAME "friotaioch-node")
+endif()
+if(TARGET bitcoin)
+  set_target_properties(bitcoin PROPERTIES OUTPUT_NAME "friotaioch")
 endif()

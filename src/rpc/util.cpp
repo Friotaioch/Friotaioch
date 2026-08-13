@@ -316,6 +316,26 @@ public:
         return obj;
     }
 
+    UniValue operator()(const WitnessV2PQR& id) const
+    {
+        UniValue obj(UniValue::VOBJ);
+        obj.pushKV("iswitness", true);
+        obj.pushKV("witness_version", 2);
+        obj.pushKV("witness_program", HexStr(id.hash));
+        obj.pushKV("is_quantum_resistant", true);
+        obj.pushKV("pq_scheme", "ml-dsa-65");
+        return obj;
+    }
+    UniValue operator()(const WitnessV3PQR& id) const
+    {
+        UniValue obj(UniValue::VOBJ);
+        obj.pushKV("iswitness", true);
+        obj.pushKV("witness_version", 3);
+        obj.pushKV("witness_program", HexStr(id.hash));
+        obj.pushKV("is_quantum_resistant", true);
+        obj.pushKV("pq_scheme", "sphincs+-128s");
+        return obj;
+    }
     UniValue operator()(const WitnessV1Taproot& tap) const
     {
         UniValue obj(UniValue::VOBJ);

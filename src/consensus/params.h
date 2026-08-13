@@ -123,6 +123,8 @@ struct Params {
     bool fPowNoRetargeting;
     int64_t nPowTargetSpacing;
     int64_t nPowTargetTimespan;
+    /** ASERT (aserti3-2d) half-life in seconds (FRIO: 2 days). */
+    int64_t nASERTHalfLife{2 * 24 * 60 * 60};
     std::chrono::seconds PowTargetSpacing() const
     {
         return std::chrono::seconds{nPowTargetSpacing};

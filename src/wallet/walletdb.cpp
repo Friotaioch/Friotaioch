@@ -6,6 +6,7 @@
 #include <bitcoin-build-config.h> // IWYU pragma: keep
 
 #include <wallet/walletdb.h>
+#include <wallet/pqr_spkm.h>
 
 #include <common/system.h>
 #include <key_io.h>
@@ -42,6 +43,8 @@ const std::string FLAGS{"flags"};
 const std::string HDCHAIN{"hdchain"};
 const std::string KEYMETA{"keymeta"};
 const std::string KEY{"key"};
+const std::string PQRKEY{"pqrkey"};
+const std::string PQRCKEY{"pqrckey"};
 const std::string LOCKED_UTXO{"lockedutxo"};
 const std::string MASTER_KEY{"mkey"};
 const std::string MINVERSION{"minversion"};
@@ -133,6 +136,21 @@ bool WalletBatch::WriteKey(const CPubKey& vchPubKey, const CPrivKey& vchPrivKey,
     const auto keypair_hash = Hash(vchPubKey, vchPrivKey);
 
     return WriteIC(std::make_pair(DBKeys::KEY, vchPubKey), std::make_pair(vchPrivKey, keypair_hash), false);
+}
+
+bool WalletBatch::WritePQRKey(const uint256& program, const std::vector<unsigned char>& pubkey, const std::vector<unsigned char>& seckey)
+{
+    // FRIO: persist a post-quantum key. value = (pubkey, seckey). Plaintext (5.4b-i).
+    return WriteIC(std::make_pair(DBKeys::PQRKEY, program), std::make_pair(pubkey, seckey), false);
+}
+
+bool WalletBatch::WritePQRCryptedKey(const uint256& program, const std::vector<unsigned char>& pubkey, const std::vector<unsigned char>& crypted_seckey)
+{
+    return WriteIC(std::make_pair(DBKeys::PQRCKEY, program), std::make_pair(pubkey, crypted_seckey), false);
+}
+bool WalletBatch::ErasePQRKey(const uint256& program)
+{
+    return EraseIC(std::make_pair(DBKeys::PQRKEY, program));
 }
 
 bool WalletBatch::WriteCryptedKey(const CPubKey& vchPubKey,
@@ -759,6 +777,45 @@ static DataStream PrefixStream(const Args&... args)
     return prefix;
 }
 
+static DBErrors LoadPQRWalletRecords(CWallet* pwallet, DatabaseBatch& batch, int last_client) EXCLUSIVE_LOCKS_REQUIRED(pwallet->cs_wallet)
+{
+    AssertLockHeld(pwallet->cs_wallet);
+    const uint256 pqr_id = uint256::FromHex("f710c0de00000000000000000000000000000000000000000000000000000001").value();
+    std::map<uint256, PQRKey> keys;
+
+    LoadResult res = LoadRecords(pwallet, batch, DBKeys::PQRKEY,
+        [&keys](CWallet* pw, DataStream& key, DataStream& value, std::string& err) -> DBErrors {
+        uint256 program;
+        key >> program;
+        PQRKey k;
+        try {
+            value >> k.pubkey >> k.seckey;
+        } catch (const std::exception& e) {
+            err = strprintf("FRIO: corrupt pqrkey record: %s", e.what());
+            return DBErrors::CORRUPT;
+        }
+        keys[program] = std::move(k);
+        return DBErrors::LOAD_OK;
+    });
+
+    LoadResult cres = LoadRecords(pwallet, batch, DBKeys::PQRCKEY,
+        [&keys](CWallet* pw, DataStream& key, DataStream& value, std::string& err) -> DBErrors {
+        uint256 program;
+        key >> program;
+        PQRKey k;
+        try { value >> k.pubkey >> k.crypted_seckey; }
+        catch (const std::exception& e) { err = strprintf("FRIO: corrupt pqrckey: %s", e.what()); return DBErrors::CORRUPT; }
+        k.encrypted = true;
+        keys[program] = std::move(k);
+        return DBErrors::LOAD_OK;
+    });
+
+    if (!keys.empty()) {
+        pwallet->LoadPQRScriptPubKeyMan(pqr_id, keys);
+    }
+    return res.m_result;
+}
+
 static DBErrors LoadDescriptorWalletRecords(CWallet* pwallet, DatabaseBatch& batch, int last_client) EXCLUSIVE_LOCKS_REQUIRED(pwallet->cs_wallet)
 {
     AssertLockHeld(pwallet->cs_wallet);
@@ -1168,6 +1225,8 @@ DBErrors WalletBatch::LoadWallet(CWallet* pwallet)
 
         // Load descriptors
         result = std::max(LoadDescriptorWalletRecords(pwallet, *m_batch, last_client), result);
+        // FRIO: load post-quantum keys
+        result = std::max(LoadPQRWalletRecords(pwallet, *m_batch, last_client), result);
         // Early return if there are unknown descriptors. Later loading of ACTIVEINTERNALSPK and ACTIVEEXTERNALEXPK
         // may reference the unknown descriptor's ID which can result in a misleading corruption error
         // when in reality the wallet is simply too new.

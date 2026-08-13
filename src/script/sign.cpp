@@ -720,6 +720,11 @@ static bool SignStep(const SigningProvider& provider, const BaseSignatureCreator
 
     case TxoutType::ANCHOR:
         return true;
+    case TxoutType::WITNESS_V2_PQR:
+    case TxoutType::WITNESS_V3_PQR:
+        // FRIO P2QR: the generic signer cannot produce ML-DSA/SPHINCS+ signatures;
+        // PQRScriptPubKeyMan::SignTransaction handles these. Fail gracefully here.
+        return false;
     } // no default case, so the compiler can warn about missing cases
     assert(false);
 }

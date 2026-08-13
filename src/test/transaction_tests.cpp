@@ -1188,8 +1188,8 @@ BOOST_AUTO_TEST_CASE(spends_witness_prog)
     std::vector<std::vector<uint8_t>> sol_dummy;
 
     // CNoDestination, PubKeyDestination, PKHash, ScriptHash, WitnessV0ScriptHash, WitnessV0KeyHash,
-    // WitnessV1Taproot, PayToAnchor, WitnessUnknown.
-    static_assert(std::variant_size_v<CTxDestination> == 9);
+    // WitnessV1Taproot, WitnessV2PQR, WitnessV3PQR, PayToAnchor, WitnessUnknown.
+    static_assert(std::variant_size_v<CTxDestination> == 11);
 
     // Go through all defined output types and sanity check SpendsNonAnchorWitnessProg.
 
@@ -1311,7 +1311,12 @@ BOOST_AUTO_TEST_CASE(spends_witness_prog)
     const auto program{ToByteVector(XOnlyPubKey{pubkey})};
     for (int i{2}; i <= 16; ++i) {
         tx_create.vout[0].scriptPubKey = GetScriptForDestination(WitnessUnknown{i, program});
-        BOOST_CHECK_EQUAL(Solver(tx_create.vout[0].scriptPubKey, sol_dummy), TxoutType::WITNESS_UNKNOWN);
+        // FRIO: witness v2/v3 are now first-class P2QR types (32-byte program);
+        // versions 4-16 remain WITNESS_UNKNOWN.
+        const TxoutType expected_wit = (i == 2) ? TxoutType::WITNESS_V2_PQR
+                                     : (i == 3) ? TxoutType::WITNESS_V3_PQR
+                                     : TxoutType::WITNESS_UNKNOWN;
+        BOOST_CHECK_EQUAL(Solver(tx_create.vout[0].scriptPubKey, sol_dummy), expected_wit);
         tx_spend.vin[0].prevout.hash = tx_create.GetHash();
         AddCoins(coins, CTransaction{tx_create}, 0, false);
         BOOST_CHECK(::SpendsNonAnchorWitnessProg(CTransaction{tx_spend}, coins));

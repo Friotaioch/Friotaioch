@@ -181,7 +181,7 @@ static RPCMethod getprivatebroadcastinfo()
             const NodeContext& node{EnsureAnyNodeContext(request.context)};
             const PeerManager& peerman{EnsurePeerman(node)};
             if (!peerman.GetInfo().private_broadcast) {
-                throw JSONRPCError(RPC_METHOD_NOT_FOUND, "Private broadcast is not enabled. Ensure you're running Bitcoin Core with -privatebroadcast=1.");
+                throw JSONRPCError(RPC_METHOD_NOT_FOUND, "Private broadcast is not enabled. Ensure you're running Friotaioch with -privatebroadcast=1.");
             }
 
             const auto txs{peerman.GetPrivateBroadcastInfo()};
@@ -249,7 +249,7 @@ static RPCMethod abortprivatebroadcast()
             const NodeContext& node{EnsureAnyNodeContext(request.context)};
             PeerManager& peerman{EnsurePeerman(node)};
             if (!peerman.GetInfo().private_broadcast) {
-                throw JSONRPCError(RPC_METHOD_NOT_FOUND, "Private broadcast is not enabled. Ensure you're running Bitcoin Core with -privatebroadcast=1.");
+                throw JSONRPCError(RPC_METHOD_NOT_FOUND, "Private broadcast is not enabled. Ensure you're running Friotaioch with -privatebroadcast=1.");
             }
 
             const uint256 id{ParseHashV(self.Arg<UniValue>("id"), "id")};

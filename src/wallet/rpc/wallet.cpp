@@ -968,6 +968,7 @@ static RPCMethod exportwatchonlywallet()
 // addresses
 RPCMethod getaddressinfo();
 RPCMethod getnewaddress();
+RPCMethod getnewpqraddress();
 RPCMethod getrawchangeaddress();
 RPCMethod setlabel();
 RPCMethod listaddressgroupings();
@@ -1046,6 +1047,7 @@ std::span<const CRPCCommand> GetWalletRPCCommands()
         {"wallet", &getbalance},
         {"wallet", &gethdkeys},
         {"wallet", &getnewaddress},
+        {"wallet", &getnewpqraddress},
         {"wallet", &getrawchangeaddress},
         {"wallet", &getreceivedbyaddress},
         {"wallet", &getreceivedbylabel},

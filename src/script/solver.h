@@ -31,6 +31,8 @@ enum class TxoutType {
     WITNESS_V0_SCRIPTHASH,
     WITNESS_V0_KEYHASH,
     WITNESS_V1_TAPROOT,
+    WITNESS_V2_PQR,   //!< FRIO: ML-DSA-65 pay-to-quantum-resistant
+    WITNESS_V3_PQR,   //!< FRIO: SPHINCS+-128s pay-to-quantum-resistant
     WITNESS_UNKNOWN, //!< Only for Witness versions not already defined above
 };
 

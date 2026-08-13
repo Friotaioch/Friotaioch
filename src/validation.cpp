@@ -2257,6 +2257,24 @@ DisconnectResult Chainstate::DisconnectBlock(const CBlock& block, const CBlockIn
     return fClean ? DISCONNECT_OK : DISCONNECT_UNCLEAN;
 }
 
+
+/** FRIO: sum the weighted PQC-verification cost of a tx's P2QR inputs. */
+static int64_t CountP2QRVerificationCost(const CTransaction& tx, const CCoinsViewCache& view)
+{
+    if (tx.IsCoinBase()) return 0;
+    int64_t cost = 0;
+    for (const CTxIn& txin : tx.vin) {
+        const Coin& coin = view.AccessCoin(txin.prevout);
+        if (coin.IsSpent()) continue;
+        int witversion; std::vector<unsigned char> program;
+        if (!coin.out.scriptPubKey.IsWitnessProgram(witversion, program)) continue;
+        if (program.size() != 32) continue;
+        if (witversion == 2) cost += PQR_VERIFY_COST_V2;
+        else if (witversion == 3) cost += PQR_VERIFY_COST_V3;
+    }
+    return cost;
+}
+
 script_verify_flags GetBlockScriptFlags(const CBlockIndex& block_index, const ChainstateManager& chainman)
 {
     const Consensus::Params& consensusparams = chainman.GetConsensus();
@@ -2269,7 +2287,7 @@ script_verify_flags GetBlockScriptFlags(const CBlockIndex& block_index, const Ch
     // mainnet.
     // For simplicity, always leave P2SH+WITNESS+TAPROOT on except for the two
     // violating blocks.
-    script_verify_flags flags{SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_WITNESS | SCRIPT_VERIFY_TAPROOT};
+    script_verify_flags flags{SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_WITNESS | SCRIPT_VERIFY_TAPROOT | SCRIPT_VERIFY_PQR};
     const auto it{consensusparams.script_flag_exceptions.find(*Assert(block_index.phashBlock))};
     if (it != consensusparams.script_flag_exceptions.end()) {
         flags = it->second;
@@ -2529,6 +2547,7 @@ bool Chainstate::ConnectBlock(const CBlock& block, BlockValidationState& state, 
     CAmount nFees = 0;
     int nInputs = 0;
     int64_t nSigOpsCost = 0;
+    int64_t nPQRVerifyCost = 0;
     blockundo.vtxundo.reserve(block.vtx.size() - 1);
     for (unsigned int i = 0; i < block.vtx.size(); i++)
     {
@@ -2577,6 +2596,12 @@ bool Chainstate::ConnectBlock(const CBlock& block, BlockValidationState& state, 
         nSigOpsCost += GetTransactionSigOpCost(tx, view, flags);
         if (nSigOpsCost > MAX_BLOCK_SIGOPS_COST) {
             state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-blk-sigops", "too many sigops");
+            break;
+        }
+        // FRIO: enforce the per-block post-quantum verification budget (DoS protection).
+        nPQRVerifyCost += CountP2QRVerificationCost(tx, view);
+        if (nPQRVerifyCost > MAX_BLOCK_PQR_VERIFICATION_COST) {
+            state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-blk-pqr-budget", "too many post-quantum verifications");
             break;
         }
 

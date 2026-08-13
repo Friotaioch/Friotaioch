@@ -146,6 +146,8 @@ enum class script_verify_flag_name : uint8_t {
     // Making unknown public key versions (in BIP 342 scripts) non-standard
     SCRIPT_VERIFY_DISCOURAGE_UPGRADABLE_PUBKEYTYPE,
 
+    // FRIO: enable P2QR post-quantum witness verification (v2 ML-DSA-65, v3 SPHINCS+-128s).
+    SCRIPT_VERIFY_PQR,
     // Constants to point to the highest flag in use. Add new flags above this line.
     //
     SCRIPT_VERIFY_END_MARKER
@@ -204,6 +206,7 @@ enum class SigVersion
     WITNESS_V0 = 1,  //!< Witness v0 (P2WPKH and P2WSH); see BIP 141
     TAPROOT = 2,     //!< Witness v1 with 32-byte program, not BIP16 P2SH-wrapped, key path spending; see BIP 341
     TAPSCRIPT = 3,   //!< Witness v1 with 32-byte program, not BIP16 P2SH-wrapped, script path spending, leaf version 0xc0; see BIP 342
+    PQR = 4,         //!< FRIO: witness v2/v3 pay-to-quantum-resistant (ML-DSA-65 / SPHINCS+-128s)
 };
 
 struct ScriptExecutionData
@@ -272,6 +275,14 @@ public:
 template <class T>
 uint256 SignatureHash(const CScript& scriptCode, const T& txTo, unsigned int nIn, int32_t nHashType, const CAmount& amount, SigVersion sigversion, const PrecomputedTransactionData* cache = nullptr, SigHashCache* sighash_cache = nullptr);
 
+/** FRIO: compute the P2QR (ML-DSA/SPHINCS+) signature hash.
+ *  Fixed layout: epoch 0x00, SIGHASH_ALL, scriptCode = witness_version||program,
+ *  amount committed, reusing the BIP-143 midstate cache. Double-SHA256. */
+template <class T>
+uint256 SignatureHashPQR(const T& txTo, unsigned int nIn, int witness_version,
+                         const std::vector<unsigned char>& program, const CAmount& amount,
+                         const PrecomputedTransactionData& cache);
+
 class BaseSignatureChecker
 {
 public:
@@ -281,6 +292,14 @@ public:
     }
 
     virtual bool CheckSchnorrSignature(std::span<const unsigned char> sig, std::span<const unsigned char> pubkey, SigVersion sigversion, ScriptExecutionData& execdata, ScriptError* serror = nullptr) const
+    {
+        return false;
+    }
+
+    /** FRIO: verify a post-quantum (ML-DSA-65 v2 / SPHINCS+-128s v3) signature over the
+     *  P2QR sighash. pubkey is revealed at spend; caller checks SHA256(pubkey)==program. */
+    virtual bool CheckPQRSignature(std::span<const unsigned char> sig, std::span<const unsigned char> pubkey,
+                                   int witness_version, const std::vector<unsigned char>& program) const
     {
         return false;
     }
@@ -330,6 +349,7 @@ public:
     GenericTransactionSignatureChecker(const T* txToIn, unsigned int nInIn, const CAmount& amountIn, const PrecomputedTransactionData& txdataIn, MissingDataBehavior mdb) : txTo(txToIn), m_mdb(mdb), nIn(nInIn), amount(amountIn), txdata(&txdataIn) {}
     bool CheckECDSASignature(const std::vector<unsigned char>& scriptSig, const std::vector<unsigned char>& vchPubKey, const CScript& scriptCode, SigVersion sigversion) const override;
     bool CheckSchnorrSignature(std::span<const unsigned char> sig, std::span<const unsigned char> pubkey, SigVersion sigversion, ScriptExecutionData& execdata, ScriptError* serror = nullptr) const override;
+    bool CheckPQRSignature(std::span<const unsigned char> sig, std::span<const unsigned char> pubkey, int witness_version, const std::vector<unsigned char>& program) const override;
     bool CheckLockTime(const CScriptNum& nLockTime) const override;
     bool CheckSequence(const CScriptNum& nSequence) const override;
 };
@@ -353,6 +373,10 @@ public:
     bool CheckSchnorrSignature(std::span<const unsigned char> sig, std::span<const unsigned char> pubkey, SigVersion sigversion, ScriptExecutionData& execdata, ScriptError* serror = nullptr) const override
     {
         return m_checker.CheckSchnorrSignature(sig, pubkey, sigversion, execdata, serror);
+    }
+    bool CheckPQRSignature(std::span<const unsigned char> sig, std::span<const unsigned char> pubkey, int witness_version, const std::vector<unsigned char>& program) const override
+    {
+        return m_checker.CheckPQRSignature(sig, pubkey, witness_version, program);
     }
 
     bool CheckLockTime(const CScriptNum& nLockTime) const override

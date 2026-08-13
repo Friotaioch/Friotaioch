@@ -91,6 +91,23 @@ struct WitnessV1Taproot : public XOnlyPubKey
     explicit WitnessV1Taproot(const XOnlyPubKey& xpk) : XOnlyPubKey(xpk) {}
 };
 
+/** FRIO: pay-to-quantum-resistant witness programs (32-byte SHA256(pubkey)).
+ *  v2 = ML-DSA-65, v3 = SPHINCS+-128s. Key revealed at spend. */
+struct WitnessV2PQR {
+    uint256 hash;
+    WitnessV2PQR() = default;
+    explicit WitnessV2PQR(const uint256& h) : hash(h) {}
+    friend bool operator==(const WitnessV2PQR& a, const WitnessV2PQR& b){ return a.hash==b.hash; }
+    friend bool operator<(const WitnessV2PQR& a, const WitnessV2PQR& b){ return a.hash<b.hash; }
+};
+struct WitnessV3PQR {
+    uint256 hash;
+    WitnessV3PQR() = default;
+    explicit WitnessV3PQR(const uint256& h) : hash(h) {}
+    friend bool operator==(const WitnessV3PQR& a, const WitnessV3PQR& b){ return a.hash==b.hash; }
+    friend bool operator<(const WitnessV3PQR& a, const WitnessV3PQR& b){ return a.hash<b.hash; }
+};
+
 //! CTxDestination subtype to encode any future Witness version
 struct WitnessUnknown
 {
@@ -140,7 +157,7 @@ struct PayToAnchor : public WitnessUnknown
  *  * WitnessUnknown: TxoutType::WITNESS_UNKNOWN destination (P2W??? address)
  *  A CTxDestination is the internal data type encoded in a bitcoin address
  */
-using CTxDestination = std::variant<CNoDestination, PubKeyDestination, PKHash, ScriptHash, WitnessV0ScriptHash, WitnessV0KeyHash, WitnessV1Taproot, PayToAnchor, WitnessUnknown>;
+using CTxDestination = std::variant<CNoDestination, PubKeyDestination, PKHash, ScriptHash, WitnessV0ScriptHash, WitnessV0KeyHash, WitnessV1Taproot, WitnessV2PQR, WitnessV3PQR, PayToAnchor, WitnessUnknown>;
 
 /** Check whether a CTxDestination corresponds to one with an address. */
 bool IsValidDestination(const CTxDestination& dest);

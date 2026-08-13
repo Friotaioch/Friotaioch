@@ -67,6 +67,7 @@
 #include <wallet/db.h>
 #include <wallet/external_signer_scriptpubkeyman.h>
 #include <wallet/scriptpubkeyman.h>
+#include <wallet/pqr_spkm.h>
 #include <wallet/transaction.h>
 #include <wallet/types.h>
 #include <wallet/walletdb.h>
@@ -2619,6 +2620,28 @@ util::Result<CTxDestination> CWallet::GetNewDestination(const OutputType type, c
     return op_dest;
 }
 
+util::Result<CTxDestination> CWallet::GetNewPQRDestination(const std::string& label, bool v3)
+{
+    LOCK(cs_wallet);
+    const uint256 id = uint256::FromHex("f710c0de00000000000000000000000000000000000000000000000000000001").value();
+    ScriptPubKeyMan* spk = GetScriptPubKeyMan(id);
+    if (!spk) {
+        auto mgr = std::make_unique<PQRScriptPubKeyMan>(*this);
+        mgr->SetID(id);
+        AddScriptPubKeyMan(id, std::move(mgr));
+        spk = GetScriptPubKeyMan(id);
+    }
+    if (!spk) return util::Error{Untranslated("FRIO: could not create PQR key manager")};
+    static_cast<PQRScriptPubKeyMan*>(spk)->SetMintV3(v3);
+    auto op_dest = spk->GetNewDestination(OutputType::BECH32M);
+    if (op_dest) {
+        // Register the new script -> SPKM mapping so IsMine's cache lookup finds it.
+        CacheNewScriptPubKeys({GetScriptForDestination(*op_dest)}, spk);
+        SetAddressBook(*op_dest, label, AddressPurpose::RECEIVE);
+    }
+    return op_dest;
+}
+
 util::Result<CTxDestination> CWallet::GetNewChangeDestination(const OutputType type)
 {
     LOCK(cs_wallet);
@@ -3597,6 +3620,24 @@ void CWallet::LoadDescriptorScriptPubKeyMan(uint256 id, WalletDescriptor& desc, 
         spk_manager = DescriptorScriptPubKeyMan::LoadFromStorage(*this, desc, m_keypool_size, keys, ckeys);
     }
     AddScriptPubKeyMan(id, std::move(spk_manager));
+}
+
+void CWallet::LoadPQRScriptPubKeyMan(const uint256& id, const std::map<uint256, PQRKey>& keys)
+{
+    auto spk_manager = std::make_unique<PQRScriptPubKeyMan>(*this);
+    spk_manager->SetID(id);
+    std::set<CScript> scripts;
+    for (const auto& [program, key] : keys) {
+        if (key.encrypted) {
+            spk_manager->LoadCryptedKey(program, key.pubkey, key.crypted_seckey);
+        } else {
+            spk_manager->LoadKey(program, key);
+        }
+        scripts.insert(CScript() << OP_2 << ToByteVector(program));
+    }
+    ScriptPubKeyMan* raw = spk_manager.get();
+    AddScriptPubKeyMan(id, std::move(spk_manager));
+    if (!scripts.empty()) CacheNewScriptPubKeys(scripts, raw);
 }
 
 DescriptorScriptPubKeyMan& CWallet::SetupDescriptorScriptPubKeyMan(WalletBatch& batch, const CExtKey& master_key, const OutputType& output_type, bool internal)

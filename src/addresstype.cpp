@@ -91,6 +91,18 @@ bool ExtractDestination(const CScript& scriptPubKey, CTxDestination& addressRet)
         addressRet = PayToAnchor();
         return true;
     }
+    case TxoutType::WITNESS_V2_PQR: {
+        WitnessV2PQR pqr;
+        std::copy(vSolutions[0].begin(), vSolutions[0].end(), pqr.hash.begin());
+        addressRet = pqr;
+        return true;
+    }
+    case TxoutType::WITNESS_V3_PQR: {
+        WitnessV3PQR pqr;
+        std::copy(vSolutions[0].begin(), vSolutions[0].end(), pqr.hash.begin());
+        addressRet = pqr;
+        return true;
+    }
     case TxoutType::WITNESS_UNKNOWN: {
         addressRet = WitnessUnknown{vSolutions[0][0], vSolutions[1]};
         return true;
@@ -138,6 +150,14 @@ public:
         return CScript() << OP_0 << ToByteVector(id);
     }
 
+    CScript operator()(const WitnessV2PQR& id) const
+    {
+        return CScript() << OP_2 << ToByteVector(id.hash);
+    }
+    CScript operator()(const WitnessV3PQR& id) const
+    {
+        return CScript() << OP_3 << ToByteVector(id.hash);
+    }
     CScript operator()(const WitnessV1Taproot& tap) const
     {
         return CScript() << OP_1 << ToByteVector(tap);
@@ -159,6 +179,8 @@ public:
     bool operator()(const WitnessV0KeyHash& dest) const { return true; }
     bool operator()(const WitnessV0ScriptHash& dest) const { return true; }
     bool operator()(const WitnessV1Taproot& dest) const { return true; }
+    bool operator()(const WitnessV2PQR& dest) const { return true; }
+    bool operator()(const WitnessV3PQR& dest) const { return true; }
     bool operator()(const WitnessUnknown& dest) const { return true; }
 };
 } // namespace
@@ -170,4 +192,13 @@ CScript GetScriptForDestination(const CTxDestination& dest)
 
 bool IsValidDestination(const CTxDestination& dest) {
     return std::visit(ValidDestinationVisitor(), dest);
+}
+
+bool IsPayToQuantumResistant(const CScript& script, int& version, std::vector<unsigned char>& program)
+{
+    int ver; std::vector<unsigned char> prog;
+    if (script.IsWitnessProgram(ver, prog) && (ver == 2 || ver == 3) && prog.size() == 32) {
+        version = ver; program = prog; return true;
+    }
+    return false;
 }

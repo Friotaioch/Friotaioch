@@ -34,6 +34,7 @@
 #include <wallet/crypter.h>
 #include <wallet/db.h>
 #include <wallet/scriptpubkeyman.h>
+#include <wallet/pqr_spkm.h>
 #include <wallet/transaction.h>
 #include <wallet/types.h>
 #include <wallet/walletutil.h>
@@ -790,6 +791,7 @@ public:
     void MarkDestinationsDirty(const std::set<CTxDestination>& destinations) EXCLUSIVE_LOCKS_REQUIRED(cs_wallet);
 
     util::Result<CTxDestination> GetNewDestination(OutputType type, const std::string& label);
+    util::Result<CTxDestination> GetNewPQRDestination(const std::string& label, bool v3 = false);
     util::Result<CTxDestination> GetNewChangeDestination(OutputType type);
 
     bool IsMine(const CTxDestination& dest) const EXCLUSIVE_LOCKS_REQUIRED(cs_wallet);
@@ -1014,6 +1016,8 @@ public:
 
     //! Instantiate a descriptor ScriptPubKeyMan from the WalletDescriptor and load it
     void LoadDescriptorScriptPubKeyMan(uint256 id, WalletDescriptor& desc, const KeyMap& keys, const CryptedKeyMap& ckeys);
+    //! FRIO: reconstruct the post-quantum SPKM from loaded keys.
+    void LoadPQRScriptPubKeyMan(const uint256& id, const std::map<uint256, PQRKey>& keys);
 
     //! Adds the active ScriptPubKeyMan for the specified type and internal. Writes it to the wallet file
     //! @param[in] id The unique id for the ScriptPubKeyMan

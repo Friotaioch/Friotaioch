@@ -97,6 +97,8 @@ std::string ScriptErrorString(const ScriptError serror)
             return "Witness provided for non-witness script";
         case SCRIPT_ERR_WITNESS_PUBKEYTYPE:
             return "Using non-compressed keys in segwit";
+        case SCRIPT_ERR_PQR_SIG_VERIFY:
+            return "Post-quantum (P2QR) signature verification failed";
         case SCRIPT_ERR_SCHNORR_SIG_SIZE:
             return "Invalid Schnorr signature size";
         case SCRIPT_ERR_SCHNORR_SIG_HASHTYPE:

@@ -58,6 +58,20 @@ public:
         return bech32::Encode(bech32::Encoding::BECH32, m_params.Bech32HRP(), data);
     }
 
+    std::string operator()(const WitnessV2PQR& id) const
+    {
+        std::vector<unsigned char> data = {2};  // witness version 2
+        data.reserve(1 + 52);
+        ConvertBits<8, 5, true>([&](unsigned char c) { data.push_back(c); }, id.hash.begin(), id.hash.end());
+        return bech32::Encode(bech32::Encoding::BECH32M, m_params.Bech32HRP(), data);
+    }
+    std::string operator()(const WitnessV3PQR& id) const
+    {
+        std::vector<unsigned char> data = {3};  // witness version 3
+        data.reserve(1 + 52);
+        ConvertBits<8, 5, true>([&](unsigned char c) { data.push_back(c); }, id.hash.begin(), id.hash.end());
+        return bech32::Encode(bech32::Encoding::BECH32M, m_params.Bech32HRP(), data);
+    }
     std::string operator()(const WitnessV1Taproot& tap) const
     {
         std::vector<unsigned char> data = {1};
@@ -186,6 +200,13 @@ CTxDestination DecodeDestination(const std::string& str, const CChainParams& par
                 return PayToAnchor();
             }
 
+            // FRIO: witness v2 (ML-DSA-65) and v3 (SPHINCS+-128s) P2QR programs are a
+            // 32-byte SHA256(pubkey) commitment. Reject any other length at decode so
+            // an unspendable frio1 address can never be produced.
+            if ((version == 2 || version == 3) && data.size() != 32) {
+                error_str = "Invalid FRIO P2QR (v2/v3) program length; must be 32 bytes";
+                return CNoDestination{};
+            }
             if (version > 16) {
                 error_str = "Invalid Bech32 address witness version";
                 return CNoDestination();

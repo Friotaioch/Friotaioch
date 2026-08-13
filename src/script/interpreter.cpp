@@ -4,6 +4,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <script/interpreter.h>
+#include <crypto/pq/pq.h>
 
 #include <crypto/ripemd160.h>
 #include <crypto/sha1.h>
@@ -1607,6 +1608,38 @@ void SigHashCache::Store(int32_t hash_type, const CScript& script_code, const Ha
 }
 
 template <class T>
+uint256 SignatureHashPQR(const T& txTo, unsigned int nIn, int witness_version,
+                         const std::vector<unsigned char>& program, const CAmount& amount,
+                         const PrecomputedTransactionData& cache)
+{
+    assert(nIn < txTo.vin.size());
+    assert(program.size() == 32);
+    assert(witness_version == 2 || witness_version == 3);
+
+    // scriptCode = witness_version byte || OP_PUSH32 || 32-byte program  (the literal scriptPubKey)
+    CScript scriptCode;
+    scriptCode << (witness_version == 2 ? OP_2 : OP_3);
+    scriptCode << std::vector<unsigned char>(program.begin(), program.end());
+
+    HashWriter ss{};
+    ss << uint8_t{0x00};                       // 1. epoch
+    ss << txTo.version;                        // 2. nVersion
+    ss << cache.hashPrevouts;                  // 3. (BIP-143 double-SHA256)
+    ss << cache.hashSequence;                  // 4.
+    ss << txTo.vin[nIn].prevout;               // 5. outpoint
+    ss << scriptCode;                          // 6. scriptCode (version||program)
+    ss << amount;                              // 7. amount
+    ss << txTo.vin[nIn].nSequence;             // 8. nSequence
+    ss << cache.hashOutputs;                   // 9.
+    ss << txTo.nLockTime;                      // 10.
+    ss << uint32_t{SIGHASH_ALL};               // 11. sighash type
+    return ss.GetHash();                       // double-SHA256 (HashWriter)
+}
+// explicit instantiations
+template uint256 SignatureHashPQR(const CTransaction&, unsigned int, int, const std::vector<unsigned char>&, const CAmount&, const PrecomputedTransactionData&);
+template uint256 SignatureHashPQR(const CMutableTransaction&, unsigned int, int, const std::vector<unsigned char>&, const CAmount&, const PrecomputedTransactionData&);
+
+template <class T>
 uint256 SignatureHash(const CScript& scriptCode, const T& txTo, unsigned int nIn, int32_t nHashType, const CAmount& amount, SigVersion sigversion, const PrecomputedTransactionData* cache, SigHashCache* sighash_cache)
 {
     assert(nIn < txTo.vin.size());
@@ -1749,6 +1782,32 @@ bool GenericTransactionSignatureChecker<T>::CheckSchnorrSignature(std::span<cons
     }
     if (!VerifySchnorrSignature(sig, pubkey, sighash)) return set_error(serror, SCRIPT_ERR_SCHNORR_SIG);
     return true;
+}
+
+template <class T>
+bool GenericTransactionSignatureChecker<T>::CheckPQRSignature(std::span<const unsigned char> sig, std::span<const unsigned char> pubkey, int witness_version, const std::vector<unsigned char>& program) const
+{
+    if (!txdata) return HandleMissingData(m_mdb);
+    if (program.size() != 32) return false;
+    if (witness_version != 2 && witness_version != 3) return false;
+
+    // Bind the pubkey to the committed program: SHA256(pubkey) == program.
+    unsigned char pkhash[32];
+    CSHA256().Write(pubkey.data(), pubkey.size()).Finalize(pkhash);
+    if (memcmp(pkhash, program.data(), 32) != 0) return false;
+
+    // Compute the FRIO P2QR sighash over the cached tx data.
+    std::vector<unsigned char> prog(program.begin(), program.end());
+    uint256 sighash = SignatureHashPQR(*txTo, nIn, witness_version, prog, amount, *txdata);
+
+    // Verify with the committed scheme.
+    if (witness_version == 2) {
+        if (pubkey.size() != pq::MLDSA65::PUBKEY_BYTES) return false;
+        return pq::MLDSA65::verify(sig.data(), sig.size(), sighash.data(), 32, pubkey.data());
+    } else {
+        if (pubkey.size() != pq::SPHINCS128s::PUBKEY_BYTES) return false;
+        return pq::SPHINCS128s::verify(sig.data(), sig.size(), sighash.data(), 32, pubkey.data());
+    }
 }
 
 template <class T>
@@ -1999,6 +2058,25 @@ static bool VerifyWitnessProgram(const CScriptWitness& witness, int witversion, 
         }
     } else if (!is_p2sh && CScript::IsPayToAnchor(witversion, program)) {
         return true;
+    } else if ((witversion == 2 || witversion == 3) && !is_p2sh) {
+        // FRIO P2QR: v2 = ML-DSA-65, v3 = SPHINCS+-128s. Soft-forked in.
+        // When SCRIPT_VERIFY_PQR is unset, behave as an unknown witness version
+        // (return success) so pre-activation nodes stay consensus-compatible.
+        if (!(flags & SCRIPT_VERIFY_PQR)) return set_success(serror);
+        if (program.size() != 32) {
+            return set_error(serror, SCRIPT_ERR_WITNESS_PROGRAM_WRONG_LENGTH);
+        }
+        // Witness must be exactly [signature, pubkey]. The exact-size check plus the
+        // SHA256(pubkey) == program binding (in CheckPQRSignature) make it non-malleable.
+        if (stack.size() != 2) {
+            return set_error(serror, SCRIPT_ERR_WITNESS_PROGRAM_MISMATCH);
+        }
+        const valtype& pubkey = SpanPopBack(stack);
+        const valtype& sig = SpanPopBack(stack);
+        if (!checker.CheckPQRSignature(sig, pubkey, witversion, program)) {
+            return set_error(serror, SCRIPT_ERR_PQR_SIG_VERIFY);
+        }
+        return set_success(serror);
     } else {
         if (flags & SCRIPT_VERIFY_DISCOURAGE_UPGRADABLE_WITNESS_PROGRAM) {
             return set_error(serror, SCRIPT_ERR_DISCOURAGE_UPGRADABLE_WITNESS_PROGRAM);
@@ -2200,6 +2278,7 @@ const std::map<std::string, script_verify_flag_name>& ScriptFlagNamesToEnum()
         FLAG_NAME(DISCOURAGE_UPGRADABLE_PUBKEYTYPE),
         FLAG_NAME(DISCOURAGE_OP_SUCCESS),
         FLAG_NAME(DISCOURAGE_UPGRADABLE_TAPROOT_VERSION),
+        FLAG_NAME(PQR),
     };
 #undef FLAG_NAME
     return g_names_to_enum;

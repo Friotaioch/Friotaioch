@@ -78,6 +78,8 @@ extern const std::string OLD_KEY;
 extern const std::string ORDERPOSNEXT;
 extern const std::string POOL;
 extern const std::string PURPOSE;
+extern const std::string PQRKEY;
+extern const std::string PQRCKEY;
 extern const std::string SETTINGS;
 extern const std::string TX;
 extern const std::string WTX_VARIANT;
@@ -236,6 +238,9 @@ public:
 
     bool WriteKeyMetadata(const CKeyMetadata& meta, const CPubKey& pubkey, bool overwrite);
     bool WriteKey(const CPubKey& vchPubKey, const CPrivKey& vchPrivKey, const CKeyMetadata &keyMeta);
+    bool WritePQRKey(const uint256& program, const std::vector<unsigned char>& pubkey, const std::vector<unsigned char>& seckey);
+    bool WritePQRCryptedKey(const uint256& program, const std::vector<unsigned char>& pubkey, const std::vector<unsigned char>& crypted_seckey);
+    bool ErasePQRKey(const uint256& program);
     bool WriteCryptedKey(const CPubKey& vchPubKey, const std::vector<unsigned char>& vchCryptedSecret, const CKeyMetadata &keyMeta);
     bool WriteMasterKey(unsigned int nID, const CMasterKey& kMasterKey);
     bool EraseMasterKey(unsigned int id);

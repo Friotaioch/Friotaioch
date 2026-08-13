@@ -89,8 +89,17 @@ static std::optional<int64_t> MaxInputWeight(const Descriptor& desc, const std::
     return {};
 }
 
+static constexpr int64_t FRIO_P2QR_INPUT_WEIGHT = 5432;
+static inline bool IsP2QRScript(const CScript& spk) {
+    int witver; std::vector<unsigned char> prog;
+    return spk.IsWitnessProgram(witver, prog) && (witver == 2 || witver == 3) && prog.size() == 32;
+}
+
 int CalculateMaximumSignedInputSize(const CTxOut& txout, const COutPoint outpoint, const SigningProvider* provider, bool can_grind_r, const CCoinControl* coin_control)
 {
+    if (IsP2QRScript(txout.scriptPubKey)) {
+        return static_cast<int>(GetVirtualTransactionSize(FRIO_P2QR_INPUT_WEIGHT, 0, 0));
+    }
     if (!provider) return -1;
 
     if (const auto desc = InferDescriptor(txout.scriptPubKey, *provider)) {
@@ -135,6 +144,7 @@ static std::optional<int64_t> GetSignedTxinWeight(const CWallet* wallet, const C
 
     // Otherwise, use the maximum satisfaction size provided by the descriptor.
     std::unique_ptr<Descriptor> desc{GetDescriptor(wallet, coin_control, txo.scriptPubKey)};
+    if (IsP2QRScript(txo.scriptPubKey)) return FRIO_P2QR_INPUT_WEIGHT;
     if (desc) return MaxInputWeight(*desc, {txin}, coin_control, tx_is_segwit, can_grind_r);
 
     return {};
@@ -247,6 +257,8 @@ static OutputType GetOutputType(TxoutType type, bool is_from_p2sh)
 {
     switch (type) {
         case TxoutType::WITNESS_V1_TAPROOT:
+        case TxoutType::WITNESS_V2_PQR:
+        case TxoutType::WITNESS_V3_PQR:
             return OutputType::BECH32M;
         case TxoutType::WITNESS_V0_KEYHASH:
         case TxoutType::WITNESS_V0_SCRIPTHASH:
