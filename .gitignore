@@ -10,4 +10,3 @@ src/crypto/pq/**/*.req
 *.log
 .cookie
 *.orig
-.github/workflows/
