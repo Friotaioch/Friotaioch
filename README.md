@@ -1,79 +1,80 @@
-Bitcoin Core integration/staging tree
-=====================================
+Friotaíoch (FRIO)
+=================
 
-https://bitcoincore.org
+A quantum-resistant cryptocurrency forked from Bitcoin Core.
 
-For an immediately usable, binary version of the Bitcoin Core software, see
-https://bitcoincore.org/en/download/.
+Friotaíoch adds post-quantum digital signatures to a Bitcoin-derived chain, so
+coins can be received and spent using signature schemes believed to resist
+attacks by large-scale quantum computers. It introduces **Pay-to-Quantum-Resistant
+(P2QR)** outputs backed by NIST-standardised signatures:
 
-What is Bitcoin Core?
----------------------
+- **ML-DSA-65** (FIPS 204) — witness version 2 (`friort1z…` / `frio1z…`)
+- **SPHINCS+-SHA2-128s** / SLH-DSA (FIPS 205) — witness version 3
 
-Bitcoin Core connects to the Bitcoin peer-to-peer network to download and fully
-validate blocks and transactions. It also includes a wallet and graphical user
-interface, which can be optionally built.
+Both schemes are validated against pinned upstream NIST known-answer vectors
+(see `src/crypto/pq/CONFORMANCE.md`).
 
-Further information about Bitcoin Core is available in the [doc folder](/doc).
+What it is
+----------
+
+Friotaíoch connects to the Friotaíoch peer-to-peer network to download and fully
+validate blocks and transactions. It includes a wallet and an optional graphical
+user interface. It is a fork of Bitcoin Core and retains that project's
+architecture, consensus rules, and tooling except where changed for
+post-quantum support and network identity.
+
+Key parameters
+--------------
+
+| Property            | Value                                   |
+|---------------------|-----------------------------------------|
+| Ticker              | FRIO                                    |
+| Proof of work       | SHA256d                                 |
+| Difficulty          | ASERT (aserti3-2d), 10-minute blocks    |
+| Supply cap          | 21,000,000 FRIO                         |
+| Mainnet P2P port    | 9333                                    |
+| Mainnet RPC port    | 9332                                    |
+| Address HRP         | `frio` (mainnet), `tfrio` (testnet)     |
+| PQ signatures       | ML-DSA-65 (v2), SPHINCS+-128s (v3)      |
+
+Post-quantum features
+----------------------
+
+- P2QR consensus (`SCRIPT_VERIFY_PQR`), enforced from genesis.
+- Native PQC wallet: generate P2QR addresses (`getnewpqraddress`), receive,
+  persist, encrypt at rest, sign, and spend.
+- Per-block PQC verification budget for denial-of-service protection.
+
+Building
+--------
+
+Friotaíoch uses the same CMake build system as Bitcoin Core.
+
+```sh
+cmake -B build
+cmake --build build -j"$(nproc)"
+```
+
+For the graphical wallet, install Qt6 and configure with the GUI enabled:
+
+```sh
+cmake -B build -DBUILD_GUI=ON
+cmake --build build -j"$(nproc)" --target bitcoin-qt
+```
+
+Binaries are emitted as `friotaiochd`, `friotaioch-cli`, `friotaioch-qt`, etc.
+
+Getting a new quantum-resistant address:
+
+```sh
+friotaioch-cli getnewpqraddress ""      # ML-DSA-65 (default, v2)
+friotaioch-cli getnewpqraddress "" 3    # SPHINCS+-128s (v3)
+```
 
 License
 -------
 
-Bitcoin Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
-information or see https://opensource.org/license/MIT.
-
-Development Process
--------------------
-
-The `master` branch is regularly built (see `doc/build-*.md` for instructions) and tested, but it is not guaranteed to be
-completely stable. [Tags](https://github.com/bitcoin/bitcoin/tags) are created
-regularly from release branches to indicate new official, stable release versions of Bitcoin Core.
-
-The https://github.com/bitcoin-core/gui repository is used exclusively for the
-development of the GUI. Its master branch is identical in all monotree
-repositories. Release branches and tags do not exist, so please do not fork
-that repository unless it is for development reasons.
-
-The contribution workflow is described in [CONTRIBUTING.md](CONTRIBUTING.md)
-and useful hints for developers can be found in [doc/developer-notes.md](doc/developer-notes.md).
-
-Testing
--------
-
-Testing and code review is the bottleneck for development; we get more pull
-requests than we can review and test on short notice. Please be patient and help out by testing
-other people's pull requests, and remember this is a security-critical project where any mistake might cost people
-lots of money.
-
-### Automated Testing
-
-Developers are strongly encouraged to write [unit tests](src/test/README.md) for new code, and to
-submit new unit tests for old code. Unit tests can be compiled and run
-(assuming they weren't disabled during the generation of the build system) with: `ctest`. Further details on running
-and extending unit tests can be found in [/src/test/README.md](/src/test/README.md).
-
-There are also [regression and integration tests](/test), written
-in Python.
-These tests can be run (if the [test dependencies](/test) are installed) with: `build/test/functional/test_runner.py`
-(assuming `build` is your build directory).
-
-The CI (Continuous Integration) systems make sure that every pull request is tested on Windows, Linux, and macOS.
-The CI must pass on all commits before merge to avoid unrelated CI failures on new pull requests.
-
-### Manual Quality Assurance (QA) Testing
-
-Changes should be tested by somebody other than the developer who wrote the
-code. This is especially important for large or high-risk changes. It is useful
-to add a test plan to the pull request description if testing the changes is
-not straightforward.
-
-Translations
-------------
-
-Changes to translations as well as new translations can be submitted to
-[Bitcoin Core's Transifex page](https://explore.transifex.com/bitcoin/bitcoin/).
-
-Translations are periodically pulled from Transifex and merged into the git repository. See the
-[translation process](doc/translation_process.md) for details on how this works.
-
-**Important**: We do not accept translation changes as GitHub pull requests because the next
-pull from Transifex would automatically overwrite them again.
+Friotaíoch is released under the terms of the MIT license. See [COPYING](COPYING)
+for more information. It is a derivative work of Bitcoin Core; the copyright of
+the upstream code remains with The Bitcoin Core developers, and modifications are
+copyright The Friotaíoch developers.

@@ -269,6 +269,7 @@ target_link_libraries(bitcoin-qt
   bitcoin_node
 )
 
+set_target_properties(bitcoin-qt PROPERTIES OUTPUT_NAME friotaioch-qt)
 import_plugins(bitcoin-qt)
 install_binary_component(bitcoin-qt HAS_MANPAGE)
 if(WIN32)
