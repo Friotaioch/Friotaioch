@@ -10,3 +10,4 @@ src/crypto/pq/**/*.req
 *.log
 .cookie
 *.orig
+/build_win/
