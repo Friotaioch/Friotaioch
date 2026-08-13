@@ -1,0 +1,537 @@
+{
+	"BUILD_DIR" : "/home/liam/friotaioch/build_win/src/qt/bitcoinqt_autogen",
+	"CMAKE_BINARY_DIR" : "/home/liam/friotaioch/build_win",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/liam/friotaioch/build_win/src/qt",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/liam/friotaioch/src/qt",
+	"CMAKE_EXECUTABLE" : "/usr/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/home/liam/friotaioch/src/qt/CMakeLists.txt",
+		"/home/liam/friotaioch/src/qt/bitcoin_locale.qrc",
+		"/home/liam/friotaioch/src/qt/bitcoin.qrc",
+		"/home/liam/friotaioch/build_win/src/qt/bitcoin_locale.qrc",
+		"/home/liam/friotaioch/cmake/windows-app.manifest.in"
+	],
+	"CMAKE_SOURCE_DIR" : "/home/liam/friotaioch",
+	"DEP_FILE" : "/home/liam/friotaioch/build_win/src/qt/bitcoinqt_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "bitcoinqt_autogen/timestamp",
+	"HEADERS" : 
+	[
+		[
+			"/home/liam/friotaioch/src/qt/addressbookpage.h",
+			"MU",
+			"EWIEGA46WW/moc_addressbookpage.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/addresstablemodel.h",
+			"MU",
+			"EWIEGA46WW/moc_addresstablemodel.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/askpassphrasedialog.h",
+			"MU",
+			"EWIEGA46WW/moc_askpassphrasedialog.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/bantablemodel.h",
+			"MU",
+			"EWIEGA46WW/moc_bantablemodel.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/bitcoin.h",
+			"MU",
+			"EWIEGA46WW/moc_bitcoin.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/bitcoinaddressvalidator.h",
+			"MU",
+			"EWIEGA46WW/moc_bitcoinaddressvalidator.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/bitcoinamountfield.h",
+			"MU",
+			"EWIEGA46WW/moc_bitcoinamountfield.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/bitcoingui.h",
+			"MU",
+			"EWIEGA46WW/moc_bitcoingui.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/bitcoinunits.h",
+			"MU",
+			"EWIEGA46WW/moc_bitcoinunits.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/clientmodel.h",
+			"MU",
+			"EWIEGA46WW/moc_clientmodel.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/coincontroldialog.h",
+			"MU",
+			"EWIEGA46WW/moc_coincontroldialog.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/coincontroltreewidget.h",
+			"MU",
+			"EWIEGA46WW/moc_coincontroltreewidget.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/createwalletdialog.h",
+			"MU",
+			"EWIEGA46WW/moc_createwalletdialog.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/csvmodelwriter.h",
+			"MU",
+			"EWIEGA46WW/moc_csvmodelwriter.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/editaddressdialog.h",
+			"MU",
+			"EWIEGA46WW/moc_editaddressdialog.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/freespacechecker.h",
+			"MU",
+			"EWIEGA46WW/moc_freespacechecker.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/guiutil.h",
+			"MU",
+			"EWIEGA46WW/moc_guiutil.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/initexecutor.h",
+			"MU",
+			"EWIEGA46WW/moc_initexecutor.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/intro.h",
+			"MU",
+			"EWIEGA46WW/moc_intro.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/modaloverlay.h",
+			"MU",
+			"EWIEGA46WW/moc_modaloverlay.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/networkstyle.h",
+			"MU",
+			"EWIEGA46WW/moc_networkstyle.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/notificator.h",
+			"MU",
+			"EWIEGA46WW/moc_notificator.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/openuridialog.h",
+			"MU",
+			"EWIEGA46WW/moc_openuridialog.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/optionsdialog.h",
+			"MU",
+			"EWIEGA46WW/moc_optionsdialog.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/optionsmodel.h",
+			"MU",
+			"EWIEGA46WW/moc_optionsmodel.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/overviewpage.h",
+			"MU",
+			"EWIEGA46WW/moc_overviewpage.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/paymentserver.h",
+			"MU",
+			"EWIEGA46WW/moc_paymentserver.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/peertablemodel.h",
+			"MU",
+			"EWIEGA46WW/moc_peertablemodel.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/peertablesortproxy.h",
+			"MU",
+			"EWIEGA46WW/moc_peertablesortproxy.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/platformstyle.h",
+			"MU",
+			"EWIEGA46WW/moc_platformstyle.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/psbtoperationsdialog.h",
+			"MU",
+			"EWIEGA46WW/moc_psbtoperationsdialog.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/qrimagewidget.h",
+			"MU",
+			"EWIEGA46WW/moc_qrimagewidget.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/qvalidatedlineedit.h",
+			"MU",
+			"EWIEGA46WW/moc_qvalidatedlineedit.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/qvaluecombobox.h",
+			"MU",
+			"EWIEGA46WW/moc_qvaluecombobox.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/receivecoinsdialog.h",
+			"MU",
+			"EWIEGA46WW/moc_receivecoinsdialog.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/receiverequestdialog.h",
+			"MU",
+			"EWIEGA46WW/moc_receiverequestdialog.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/recentrequeststablemodel.h",
+			"MU",
+			"EWIEGA46WW/moc_recentrequeststablemodel.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/rpcconsole.h",
+			"MU",
+			"EWIEGA46WW/moc_rpcconsole.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/sendcoinsdialog.h",
+			"MU",
+			"EWIEGA46WW/moc_sendcoinsdialog.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/sendcoinsentry.h",
+			"MU",
+			"EWIEGA46WW/moc_sendcoinsentry.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/signverifymessagedialog.h",
+			"MU",
+			"EWIEGA46WW/moc_signverifymessagedialog.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/splashscreen.h",
+			"MU",
+			"EWIEGA46WW/moc_splashscreen.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/trafficgraphwidget.h",
+			"MU",
+			"EWIEGA46WW/moc_trafficgraphwidget.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/transactiondesc.h",
+			"MU",
+			"EWIEGA46WW/moc_transactiondesc.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/transactiondescdialog.h",
+			"MU",
+			"EWIEGA46WW/moc_transactiondescdialog.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/transactionfilterproxy.h",
+			"MU",
+			"EWIEGA46WW/moc_transactionfilterproxy.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/transactionoverviewwidget.h",
+			"MU",
+			"EWIEGA46WW/moc_transactionoverviewwidget.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/transactionrecord.h",
+			"MU",
+			"EWIEGA46WW/moc_transactionrecord.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/transactiontablemodel.h",
+			"MU",
+			"EWIEGA46WW/moc_transactiontablemodel.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/transactionview.h",
+			"MU",
+			"EWIEGA46WW/moc_transactionview.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/utilitydialog.h",
+			"MU",
+			"EWIEGA46WW/moc_utilitydialog.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/walletcontroller.h",
+			"MU",
+			"EWIEGA46WW/moc_walletcontroller.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/walletframe.h",
+			"MU",
+			"EWIEGA46WW/moc_walletframe.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/walletmodel.h",
+			"MU",
+			"EWIEGA46WW/moc_walletmodel.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/walletmodeltransaction.h",
+			"MU",
+			"EWIEGA46WW/moc_walletmodeltransaction.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/walletview.h",
+			"MU",
+			"EWIEGA46WW/moc_walletview.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/winshutdownmonitor.h",
+			"MU",
+			"EWIEGA46WW/moc_winshutdownmonitor.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/liam/friotaioch/build_win/src/qt/bitcoinqt_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/liam/friotaioch/build_win/src/qt/bitcoinqt_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"BOOST_MULTI_INDEX_DISABLE_SERIALIZATION",
+		"MINGW_HAS_SECURE_API=1",
+		"NOMINMAX",
+		"QT_CORE_LIB",
+		"QT_GUI_LIB",
+		"QT_NETWORK_LIB",
+		"QT_NO_DEBUG",
+		"QT_NO_KEYWORDS",
+		"QT_USE_QSTRINGBUILDER",
+		"QT_WIDGETS_LIB",
+		"UNICODE",
+		"WIN32",
+		"WIN32_LEAN_AND_MEAN",
+		"WIN64",
+		"_ENABLE_EXTENDED_ALIGNED_STORAGE",
+		"_MT",
+		"_UNICODE",
+		"_WIN32_IE=0x0A00",
+		"_WIN32_WINNT=0x0A00",
+		"_WIN64",
+		"_WINDOWS"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/liam/friotaioch/build_win/src",
+		"/home/liam/friotaioch/src",
+		"/home/liam/friotaioch/src/univalue/include",
+		"/home/liam/friotaioch/src/leveldb/include",
+		"/home/liam/friotaioch/depends/x86_64-w64-mingw32/include/QtWidgets",
+		"/home/liam/friotaioch/depends/x86_64-w64-mingw32/include",
+		"/home/liam/friotaioch/depends/x86_64-w64-mingw32/include/QtCore",
+		"/home/liam/friotaioch/depends/x86_64-w64-mingw32/mkspecs/win32-g++",
+		"/home/liam/friotaioch/depends/x86_64-w64-mingw32/include/QtGui",
+		"/home/liam/friotaioch/depends/x86_64-w64-mingw32/boost/include",
+		"/home/liam/friotaioch/depends/x86_64-w64-mingw32/include/QtNetwork",
+		"/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++",
+		"/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32",
+		"/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/backward",
+		"/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include",
+		"/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include-fixed",
+		"/usr/x86_64-w64-mingw32/include"
+	],
+	"MOC_MACRO_NAMES" : 
+	[
+		"Q_OBJECT",
+		"Q_GADGET",
+		"Q_NAMESPACE",
+		"Q_NAMESPACE_EXPORT",
+		"Q_GADGET_EXPORT",
+		"Q_ENUM_NS"
+	],
+	"MOC_OPTIONS" : [ "-p/home/liam/friotaioch/src/qt" ],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/bin/x86_64-w64-mingw32-g++-posix",
+		"-std=c++20",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/liam/friotaioch/build_win/src/qt/bitcoinqt_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : 
+	[
+		"/home/liam/friotaioch/build_win/src/qt/qrc_bitcoin.cpp",
+		"/home/liam/friotaioch/build_win/src/qt/qrc_bitcoin_locale.cpp"
+	],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 4,
+	"PARSE_CACHE_FILE" : "/home/liam/friotaioch/build_win/src/qt/CMakeFiles/bitcoinqt_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/home/liam/friotaioch/depends/x86_64-w64-mingw32/native/libexec/moc",
+	"QT_UIC_EXECUTABLE" : "/home/liam/friotaioch/depends/x86_64-w64-mingw32/native/libexec/uic",
+	"QT_VERSION_MAJOR" : 6,
+	"QT_VERSION_MINOR" : 8,
+	"SETTINGS_FILE" : "/home/liam/friotaioch/build_win/src/qt/CMakeFiles/bitcoinqt_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[ "/home/liam/friotaioch/src/qt/addressbookpage.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/addresstablemodel.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/askpassphrasedialog.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/bantablemodel.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/bitcoin.cpp", "MU", null ],
+		[
+			"/home/liam/friotaioch/src/qt/bitcoinaddressvalidator.cpp",
+			"MU",
+			null
+		],
+		[ "/home/liam/friotaioch/src/qt/bitcoinamountfield.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/bitcoingui.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/bitcoinunits.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/clientmodel.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/coincontroldialog.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/coincontroltreewidget.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/createwalletdialog.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/csvmodelwriter.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/editaddressdialog.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/freespacechecker.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/guiutil.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/initexecutor.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/intro.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/modaloverlay.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/networkstyle.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/notificator.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/openuridialog.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/optionsdialog.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/optionsmodel.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/overviewpage.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/paymentserver.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/peertablemodel.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/peertablesortproxy.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/platformstyle.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/psbtoperationsdialog.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/qrimagewidget.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/qvalidatedlineedit.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/qvaluecombobox.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/receivecoinsdialog.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/receiverequestdialog.cpp", "MU", null ],
+		[
+			"/home/liam/friotaioch/src/qt/recentrequeststablemodel.cpp",
+			"MU",
+			null
+		],
+		[ "/home/liam/friotaioch/src/qt/rpcconsole.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/sendcoinsdialog.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/sendcoinsentry.cpp", "MU", null ],
+		[
+			"/home/liam/friotaioch/src/qt/signverifymessagedialog.cpp",
+			"MU",
+			null
+		],
+		[ "/home/liam/friotaioch/src/qt/splashscreen.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/trafficgraphwidget.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/transactiondesc.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/transactiondescdialog.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/transactionfilterproxy.cpp", "MU", null ],
+		[
+			"/home/liam/friotaioch/src/qt/transactionoverviewwidget.cpp",
+			"MU",
+			null
+		],
+		[ "/home/liam/friotaioch/src/qt/transactionrecord.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/transactiontablemodel.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/transactionview.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/utilitydialog.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/walletcontroller.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/walletframe.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/walletmodel.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/walletmodeltransaction.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/walletview.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/winshutdownmonitor.cpp", "MU", null ]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [ "/home/liam/friotaioch/src/qt/forms" ],
+	"UIC_SKIP" : 
+	[
+		"/home/liam/friotaioch/build_win/src/qt/qrc_bitcoin.cpp",
+		"/home/liam/friotaioch/build_win/src/qt/qrc_bitcoin_locale.cpp"
+	],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

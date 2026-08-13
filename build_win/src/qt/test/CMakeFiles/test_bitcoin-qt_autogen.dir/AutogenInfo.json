@@ -1,0 +1,174 @@
+{
+	"BUILD_DIR" : "/home/liam/friotaioch/build_win/src/qt/test/test_bitcoin-qt_autogen",
+	"CMAKE_BINARY_DIR" : "/home/liam/friotaioch/build_win",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/liam/friotaioch/build_win/src/qt/test",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/liam/friotaioch/src/qt/test",
+	"CMAKE_EXECUTABLE" : "/usr/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/home/liam/friotaioch/src/qt/test/CMakeLists.txt",
+		"/home/liam/friotaioch/cmake/windows-app.manifest.in"
+	],
+	"CMAKE_SOURCE_DIR" : "/home/liam/friotaioch",
+	"DEP_FILE" : "/home/liam/friotaioch/build_win/src/qt/test/test_bitcoin-qt_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "test_bitcoin-qt_autogen/timestamp",
+	"HEADERS" : 
+	[
+		[
+			"/home/liam/friotaioch/src/qt/test/addressbooktests.h",
+			"MU",
+			"EWIEGA46WW/moc_addressbooktests.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/test/apptests.h",
+			"MU",
+			"EWIEGA46WW/moc_apptests.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/test/optiontests.h",
+			"MU",
+			"EWIEGA46WW/moc_optiontests.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/test/rpcnestedtests.h",
+			"MU",
+			"EWIEGA46WW/moc_rpcnestedtests.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/test/uritests.h",
+			"MU",
+			"EWIEGA46WW/moc_uritests.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/test/util.h",
+			"MU",
+			"EWIEGA46WW/moc_util.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/qt/test/wallettests.h",
+			"MU",
+			"EWIEGA46WW/moc_wallettests.cpp",
+			null
+		],
+		[
+			"/home/liam/friotaioch/src/wallet/test/wallet_test_fixture.h",
+			"MU",
+			"LEBK5R3D2J/moc_wallet_test_fixture.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/liam/friotaioch/build_win/src/qt/test/test_bitcoin-qt_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/liam/friotaioch/build_win/src/qt/test/test_bitcoin-qt_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"BOOST_MULTI_INDEX_DISABLE_SERIALIZATION",
+		"MINGW_HAS_SECURE_API=1",
+		"NOMINMAX",
+		"QT_CORE_LIB",
+		"QT_GUI_LIB",
+		"QT_NO_DEBUG",
+		"QT_NO_KEYWORDS",
+		"QT_TESTCASE_BUILDDIR=\"/home/liam/friotaioch/build_win/src/qt/test\"",
+		"QT_TESTCASE_SOURCEDIR=\"/home/liam/friotaioch/src/qt/test\"",
+		"QT_TESTLIB_LIB",
+		"QT_USE_QSTRINGBUILDER",
+		"QT_WIDGETS_LIB",
+		"UNICODE",
+		"WIN32",
+		"WIN32_LEAN_AND_MEAN",
+		"WIN64",
+		"_ENABLE_EXTENDED_ALIGNED_STORAGE",
+		"_MT",
+		"_UNICODE",
+		"_WIN32_IE=0x0A00",
+		"_WIN32_WINNT=0x0A00",
+		"_WIN64",
+		"_WINDOWS"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/liam/friotaioch/build_win/src",
+		"/home/liam/friotaioch/src",
+		"/home/liam/friotaioch/src/univalue/include",
+		"/home/liam/friotaioch/depends/x86_64-w64-mingw32/include/QtWidgets",
+		"/home/liam/friotaioch/depends/x86_64-w64-mingw32/include",
+		"/home/liam/friotaioch/depends/x86_64-w64-mingw32/include/QtCore",
+		"/home/liam/friotaioch/depends/x86_64-w64-mingw32/mkspecs/win32-g++",
+		"/home/liam/friotaioch/depends/x86_64-w64-mingw32/include/QtGui",
+		"/home/liam/friotaioch/depends/x86_64-w64-mingw32/boost/include",
+		"/home/liam/friotaioch/depends/x86_64-w64-mingw32/include/QtTest",
+		"/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++",
+		"/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/x86_64-w64-mingw32",
+		"/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/c++/backward",
+		"/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include",
+		"/usr/lib/gcc/x86_64-w64-mingw32/13-posix/include-fixed",
+		"/usr/x86_64-w64-mingw32/include"
+	],
+	"MOC_MACRO_NAMES" : 
+	[
+		"Q_OBJECT",
+		"Q_GADGET",
+		"Q_NAMESPACE",
+		"Q_NAMESPACE_EXPORT",
+		"Q_GADGET_EXPORT",
+		"Q_ENUM_NS"
+	],
+	"MOC_OPTIONS" : [ "-p/home/liam/friotaioch/src/qt/test" ],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/bin/x86_64-w64-mingw32-g++-posix",
+		"-std=c++20",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/liam/friotaioch/build_win/src/qt/test/test_bitcoin-qt_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 4,
+	"PARSE_CACHE_FILE" : "/home/liam/friotaioch/build_win/src/qt/test/CMakeFiles/test_bitcoin-qt_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/home/liam/friotaioch/depends/x86_64-w64-mingw32/native/libexec/moc",
+	"QT_UIC_EXECUTABLE" : "/home/liam/friotaioch/depends/x86_64-w64-mingw32/native/libexec/uic",
+	"QT_VERSION_MAJOR" : 6,
+	"QT_VERSION_MINOR" : 8,
+	"SETTINGS_FILE" : "/home/liam/friotaioch/build_win/src/qt/test/CMakeFiles/test_bitcoin-qt_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[ "/home/liam/friotaioch/src/init/bitcoin-qt.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/test/addressbooktests.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/test/apptests.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/test/optiontests.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/test/rpcnestedtests.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/test/test_main.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/test/uritests.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/test/util.cpp", "MU", null ],
+		[ "/home/liam/friotaioch/src/qt/test/wallettests.cpp", "MU", null ],
+		[
+			"/home/liam/friotaioch/src/wallet/test/wallet_test_fixture.cpp",
+			"MU",
+			null
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [ "/home/liam/friotaioch/src/qt/test/forms" ],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

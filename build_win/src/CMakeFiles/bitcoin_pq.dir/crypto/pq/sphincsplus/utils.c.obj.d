@@ -1,0 +1,23 @@
+src/CMakeFiles/bitcoin_pq.dir/crypto/pq/sphincsplus/utils.c.obj: \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/utils.c \
+ /usr/share/mingw-w64/include/string.h \
+ /usr/share/mingw-w64/include/crtdefs.h \
+ /usr/share/mingw-w64/include/corecrt.h \
+ /usr/share/mingw-w64/include/_mingw.h \
+ /usr/share/mingw-w64/include/_mingw_mac.h \
+ /usr/share/mingw-w64/include/_mingw_secapi.h \
+ /usr/share/mingw-w64/include/vadefs.h \
+ /usr/share/mingw-w64/include/sdks/_mingw_ddk.h \
+ /usr/share/mingw-w64/include/sec_api/string_s.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/utils.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/stdint.h \
+ /usr/share/mingw-w64/include/stdint.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/stddef.h \
+ /usr/share/mingw-w64/include/stddef.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/params.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/params/params-sphincs-sha2-128s.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/params/../sha2_offsets.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/context.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/hash.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/thash.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/address.h

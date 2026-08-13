@@ -1,0 +1,1 @@
+/home/liam/friotaioch/test/functional/interface_bitcoin_cli.py

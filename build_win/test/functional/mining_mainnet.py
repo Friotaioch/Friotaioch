@@ -1,0 +1,1 @@
+/home/liam/friotaioch/test/functional/mining_mainnet.py

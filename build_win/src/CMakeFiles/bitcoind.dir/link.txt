@@ -1,0 +1,3 @@
+/usr/bin/cmake -E rm -f CMakeFiles/bitcoind.dir/objects.a
+x86_64-w64-mingw32-ar qc CMakeFiles/bitcoind.dir/objects.a @CMakeFiles/bitcoind.dir/objects1.rsp
+/bin/x86_64-w64-mingw32-g++-posix -O2 -O2 -g -static -Wl,--major-subsystem-version,6 -Wl,--minor-subsystem-version,2 -fstack-reuse=none -fstack-protector-all -fcf-protection=full -Wl,--enable-reloc-section -Wl,--dynamicbase -Wl,--nxcompat -Wl,--high-entropy-va -Wl,--whole-archive CMakeFiles/bitcoind.dir/objects.a -Wl,--no-whole-archive -o ../bin/friotaiochd.exe -Wl,--out-implib,../lib/libfriotaiochd.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/bitcoind.dir/linkLibs.rsp 

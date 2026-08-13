@@ -1,0 +1,2 @@
+x86_64-w64-mingw32-ar qc ../lib/libbitcoin_clientversion.a CMakeFiles/bitcoin_clientversion.dir/clientversion.cpp.obj
+x86_64-w64-mingw32-ranlib ../lib/libbitcoin_clientversion.a

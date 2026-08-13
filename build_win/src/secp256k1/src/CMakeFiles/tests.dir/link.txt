@@ -1,0 +1,3 @@
+/usr/bin/cmake -E rm -f CMakeFiles/tests.dir/objects.a
+x86_64-w64-mingw32-ar qc CMakeFiles/tests.dir/objects.a @CMakeFiles/tests.dir/objects1.rsp
+/bin/x86_64-w64-mingw32-gcc-posix -O2 -O2 -g  -Wl,--whole-archive CMakeFiles/tests.dir/objects.a -Wl,--no-whole-archive -o ../bin/tests.exe -Wl,--out-implib,../lib/libtests.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/tests.dir/linkLibs.rsp

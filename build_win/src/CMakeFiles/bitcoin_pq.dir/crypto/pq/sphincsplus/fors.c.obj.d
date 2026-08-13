@@ -1,0 +1,34 @@
+src/CMakeFiles/bitcoin_pq.dir/crypto/pq/sphincsplus/fors.c.obj: \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/fors.c \
+ /usr/share/mingw-w64/include/stdlib.h \
+ /usr/share/mingw-w64/include/corecrt.h \
+ /usr/share/mingw-w64/include/_mingw.h \
+ /usr/share/mingw-w64/include/_mingw_mac.h \
+ /usr/share/mingw-w64/include/_mingw_secapi.h \
+ /usr/share/mingw-w64/include/vadefs.h \
+ /usr/share/mingw-w64/include/sdks/_mingw_ddk.h \
+ /usr/share/mingw-w64/include/corecrt_wstdlib.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/limits.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/syslimits.h \
+ /usr/share/mingw-w64/include/limits.h \
+ /usr/share/mingw-w64/include/crtdefs.h \
+ /usr/share/mingw-w64/include/sec_api/stdlib_s.h \
+ /usr/share/mingw-w64/include/malloc.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/mm_malloc.h \
+ /usr/share/mingw-w64/include/errno.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/stdint.h \
+ /usr/share/mingw-w64/include/stdint.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/stddef.h \
+ /usr/share/mingw-w64/include/stddef.h \
+ /usr/share/mingw-w64/include/string.h \
+ /usr/share/mingw-w64/include/sec_api/string_s.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/fors.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/params.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/params/params-sphincs-sha2-128s.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/params/../sha2_offsets.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/context.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/utils.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/utilsx1.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/hash.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/thash.h \
+ /home/liam/friotaioch/src/crypto/pq/sphincsplus/address.h

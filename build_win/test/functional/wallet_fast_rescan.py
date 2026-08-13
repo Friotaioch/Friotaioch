@@ -1,0 +1,1 @@
+/home/liam/friotaioch/test/functional/wallet_fast_rescan.py

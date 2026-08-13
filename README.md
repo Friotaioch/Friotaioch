@@ -34,8 +34,8 @@ Key parameters
 | Proof of work       | SHA256d                                 |
 | Difficulty          | ASERT (aserti3-2d), 10-minute blocks    |
 | Supply cap          | 21,000,000 FRIO                         |
-| Mainnet P2P port    | 9333                                    |
-| Mainnet RPC port    | 9332                                    |
+| Mainnet P2P port    | 51776                                    |
+| Mainnet RPC port    | 51777                                    |
 | Address HRP         | `frio` (mainnet), `tfrio` (testnet)     |
 | PQ signatures       | ML-DSA-65 (v2), SPHINCS+-128s (v3)      |
 

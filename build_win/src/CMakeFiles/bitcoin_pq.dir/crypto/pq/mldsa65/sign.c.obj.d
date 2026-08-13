@@ -1,0 +1,22 @@
+src/CMakeFiles/bitcoin_pq.dir/crypto/pq/mldsa65/sign.c.obj: \
+ /home/liam/friotaioch/src/crypto/pq/mldsa65/sign.c \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/stdint.h \
+ /usr/share/mingw-w64/include/stdint.h \
+ /usr/share/mingw-w64/include/crtdefs.h \
+ /usr/share/mingw-w64/include/corecrt.h \
+ /usr/share/mingw-w64/include/_mingw.h \
+ /usr/share/mingw-w64/include/_mingw_mac.h \
+ /usr/share/mingw-w64/include/_mingw_secapi.h \
+ /usr/share/mingw-w64/include/vadefs.h \
+ /usr/share/mingw-w64/include/sdks/_mingw_ddk.h \
+ /usr/lib/gcc/x86_64-w64-mingw32/13-posix/include/stddef.h \
+ /usr/share/mingw-w64/include/stddef.h \
+ /home/liam/friotaioch/src/crypto/pq/mldsa65/params.h \
+ /home/liam/friotaioch/src/crypto/pq/mldsa65/config.h \
+ /home/liam/friotaioch/src/crypto/pq/mldsa65/sign.h \
+ /home/liam/friotaioch/src/crypto/pq/mldsa65/polyvec.h \
+ /home/liam/friotaioch/src/crypto/pq/mldsa65/poly.h \
+ /home/liam/friotaioch/src/crypto/pq/mldsa65/packing.h \
+ /home/liam/friotaioch/src/crypto/pq/mldsa65/randombytes.h \
+ /home/liam/friotaioch/src/crypto/pq/mldsa65/symmetric.h \
+ /home/liam/friotaioch/src/crypto/pq/mldsa65/fips202.h
