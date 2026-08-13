@@ -1,1 +1,0 @@
-/home/liam/friotaioch/test/functional/data/__init__.py

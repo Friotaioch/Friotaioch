@@ -1,1 +1,0 @@
-/home/liam/friotaioch/test/functional/rpc_named_arguments.py

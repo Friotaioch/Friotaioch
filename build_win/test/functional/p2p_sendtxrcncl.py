@@ -1,1 +1,0 @@
-/home/liam/friotaioch/test/functional/p2p_sendtxrcncl.py

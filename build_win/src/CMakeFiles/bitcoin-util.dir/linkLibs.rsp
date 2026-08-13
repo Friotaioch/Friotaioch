@@ -1,1 +1,0 @@
- ../lib/libbitcoin_common.a ../lib/libbitcoin_util.a univalue/libunivalue.a ../lib/libbitcoin_clientversion.a -liphlpapi -lbcrypt ../lib/libbitcoin_consensus.a ../lib/libbitcoin_crypto.a ../lib/libbitcoin_pq.a secp256k1/lib/libsecp256k1.a -lws2_32 -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

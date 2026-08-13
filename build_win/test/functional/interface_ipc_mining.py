@@ -1,1 +1,0 @@
-/home/liam/friotaioch/test/functional/interface_ipc_mining.py

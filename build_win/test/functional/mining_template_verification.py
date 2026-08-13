@@ -1,1 +1,0 @@
-/home/liam/friotaioch/test/functional/mining_template_verification.py

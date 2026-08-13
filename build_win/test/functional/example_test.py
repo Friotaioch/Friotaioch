@@ -1,1 +1,0 @@
-/home/liam/friotaioch/test/functional/example_test.py

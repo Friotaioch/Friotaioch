@@ -1,1 +1,0 @@
--I/home/liam/friotaioch/build_win/src -I/home/liam/friotaioch/src -I/home/liam/friotaioch/src/univalue/include -isystem "/home/liam/friotaioch/depends/x86_64-w64-mingw32/include" -isystem "/home/liam/friotaioch/depends/x86_64-w64-mingw32/boost/include"

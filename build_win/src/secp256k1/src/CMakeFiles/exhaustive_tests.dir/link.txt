@@ -1,3 +1,0 @@
-/usr/bin/cmake -E rm -f CMakeFiles/exhaustive_tests.dir/objects.a
-x86_64-w64-mingw32-ar qc CMakeFiles/exhaustive_tests.dir/objects.a @CMakeFiles/exhaustive_tests.dir/objects1.rsp
-/bin/x86_64-w64-mingw32-gcc-posix -O2 -O2 -g  -Wl,--whole-archive CMakeFiles/exhaustive_tests.dir/objects.a -Wl,--no-whole-archive -o ../bin/exhaustive_tests.exe -Wl,--out-implib,../lib/libexhaustive_tests.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/exhaustive_tests.dir/linkLibs.rsp

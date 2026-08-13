@@ -1,1 +1,0 @@
-/home/liam/friotaioch/test/functional/feature_prune_stale_fork.py

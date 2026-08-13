@@ -1,1 +1,0 @@
-/home/liam/friotaioch/test/functional/feature_blocksxor.py

@@ -1,1 +1,0 @@
-/home/liam/friotaioch/test/functional/test_framework/script_util.py

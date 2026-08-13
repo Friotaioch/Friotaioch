@@ -1,1 +1,0 @@
-/home/liam/friotaioch/test/functional/wallet_ancient_migration.py

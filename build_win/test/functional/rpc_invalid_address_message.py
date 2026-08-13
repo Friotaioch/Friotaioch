@@ -1,1 +1,0 @@
-/home/liam/friotaioch/test/functional/rpc_invalid_address_message.py

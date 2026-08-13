@@ -1,1 +1,0 @@
-/home/liam/friotaioch/test/functional/wallet_multiwallet.py

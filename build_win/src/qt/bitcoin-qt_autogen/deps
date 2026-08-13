@@ -1,9 +1,0 @@
-bitcoin-qt_autogen/timestamp: \
-	/home/liam/friotaioch/build_win/src/qt/bitcoin_locale.qrc \
-	/home/liam/friotaioch/cmake/windows-app.manifest.in \
-	/home/liam/friotaioch/src/init/bitcoin-qt.cpp \
-	/home/liam/friotaioch/src/qt/CMakeLists.txt \
-	/home/liam/friotaioch/src/qt/bitcoin.qrc \
-	/home/liam/friotaioch/src/qt/bitcoin_locale.qrc \
-	/home/liam/friotaioch/src/qt/main.cpp \
-	/usr/bin/cmake
