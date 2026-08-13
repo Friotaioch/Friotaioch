@@ -24,10 +24,10 @@ jobs:
         uses: actions/cache@v4
         with:
           path: depends/x86_64-w64-mingw32
-          key: depends-win-${{ hashFiles('depends/packages/*.mk', 'depends/hosts/*.mk') }}
+          key: depends-win-v2-${{ hashFiles('depends/packages/*.mk', 'depends/hosts/*.mk') }}
       - name: Build depends (Windows)
         run: |
-          make -C depends HOST=x86_64-w64-mingw32 -j$(nproc) NO_QT=0
+          make -C depends HOST=x86_64-w64-mingw32 -j$(nproc)
       - name: Configure
         run: |
           cmake -B build_win --toolchain depends/x86_64-w64-mingw32/toolchain.cmake -DBUILD_GUI=ON -DENABLE_IPC=OFF
