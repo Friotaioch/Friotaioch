@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/logo.png" width="180" alt="Friotaioch — post-quantum cryptocurrency"></p>
+
 Friotaíoch (FRIO)
 =================
 
