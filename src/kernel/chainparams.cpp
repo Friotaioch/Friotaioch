@@ -175,7 +175,7 @@ public:
         // This is fine at runtime as we'll fall back to using them as an addrfetch if they don't support the
         // service bits we want, but we should get them updated to support all service bits wanted by any
         // release ASAP to avoid it where possible.
-        // FRIO: DNS seeds TBD. No inherited Bitcoin seeds. Peer manually via -addnode until seeds exist.
+        vSeeds.emplace_back("seed.friotaioch.com."); // FRIO DNS seeder
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,36);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,16);
@@ -185,7 +185,7 @@ public:
 
         bech32_hrp = "frio";
 
-        vFixedSeeds = std::vector<uint8_t>(std::begin(chainparams_seed_main), std::end(chainparams_seed_main));
+        vFixedSeeds.clear(); // FRIO: no fixed seeds (fresh chain)
 
         fDefaultConsistencyChecks = false;
         m_is_mockable_chain = false;
@@ -274,7 +274,7 @@ public:
 
         bech32_hrp = "tfrio";
 
-        vFixedSeeds = std::vector<uint8_t>(std::begin(chainparams_seed_test), std::end(chainparams_seed_test));
+        vFixedSeeds.clear(); // FRIO testnet: no fixed seeds
 
         fDefaultConsistencyChecks = false;
         m_is_mockable_chain = false;
