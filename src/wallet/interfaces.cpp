@@ -159,6 +159,11 @@ public:
         LOCK(m_wallet->cs_wallet);
         return m_wallet->GetNewDestination(type, label);
     }
+    util::Result<CTxDestination> getNewPQRDestination(const std::string& label, bool v3) override
+    {
+        LOCK(m_wallet->cs_wallet);
+        return m_wallet->GetNewPQRDestination(label, v3);
+    }
     bool getPubKey(const CScript& script, const CKeyID& address, CPubKey& pub_key) override
     {
         std::unique_ptr<SigningProvider> provider = m_wallet->GetSolvingProvider(script);

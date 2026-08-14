@@ -99,6 +99,15 @@ void ReceiveCoinsDialog::setModel(WalletModel *_model)
         if (model->wallet().taprootEnabled()) {
             add_address_type(OutputType::BECH32M, tr("Bech32m (Taproot)"), tr("Bech32m (BIP-350) is an upgrade to Bech32, wallet support is still limited."));
         }
+        {
+            // FRIO post-quantum (P2QR) address types. Sentinel data 1000/1001 (not OutputType).
+            int idx1 = ui->addressType->count();
+            ui->addressType->addItem(tr("P2QR \u00b7 ML-DSA (quantum-resistant)"), 1000);
+            ui->addressType->setItemData(idx1, tr("Post-quantum address using ML-DSA-65 (FIPS 204). Recommended quantum-resistant default."), Qt::ToolTipRole);
+            int idx2 = ui->addressType->count();
+            ui->addressType->addItem(tr("P2QR \u00b7 SPHINCS+ (quantum-resistant)"), 1001);
+            ui->addressType->setItemData(idx2, tr("Post-quantum address using SPHINCS+ (FIPS 205). Larger, most conservative."), Qt::ToolTipRole);
+        }
 
         // Set the button to be enabled or disabled based on whether the wallet can give out new addresses.
         ui->receiveButton->setEnabled(model->wallet().canGetAddresses());
