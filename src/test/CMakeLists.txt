@@ -7,6 +7,11 @@
 add_executable(test_bitcoin
   pqr_spend_tests.cpp
   pqr_verify_tests.cpp
+  pqr_export_vectors.cpp
+  pqr_wasm_crosscheck.cpp
+  pqr_wasm_crosscheck_spx.cpp
+  pqr_seed_match.cpp
+  pqr_full_spend_crosscheck.cpp
   pqr_sighash_tests.cpp
   pq_tests.cpp
   main.cpp

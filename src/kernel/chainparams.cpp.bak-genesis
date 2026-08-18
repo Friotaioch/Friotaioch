@@ -9,7 +9,6 @@
 #include <atomic>
 #include <thread>
 #include <cstdio>
-#include <ctime>
 #include <cstdlib>
 
 #include <chainparamsseeds.h>
@@ -170,10 +169,9 @@ public:
         m_assumed_blockchain_size = 856;
         m_assumed_chain_state_size = 14;
 
-                genesis = CreateGenesisBlock(1787076029, 1929576519, 0x1d00ffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1786453747, 2174250354, 0x1d00ffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256{"00000000908e647ce8296582a2d24023ef96a5e7d2320a5815b603463993676d"});
-
+        assert(consensus.hashGenesisBlock == uint256{"000000002c96c2fb439dafed60fa09a3bbcbbdcbe0fd9567e31d89b6f860a62a"});
         assert(genesis.hashMerkleRoot == uint256{"20fb53afbdad5ee45d73fdfadf4b854dad920cf3a63eb07fec0dcfbb414568d6"});
 
         // Note that of those which support the service bits prefix, most only support a subset of

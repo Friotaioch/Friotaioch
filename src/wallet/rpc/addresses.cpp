@@ -13,6 +13,7 @@
 #include <util/translation.h>
 #include <wallet/receive.h>
 #include <wallet/rpc/util.h>
+#include <wallet/pqr_spkm.h>
 #include <wallet/wallet.h>
 
 #include <univalue.h>
@@ -94,6 +95,53 @@ RPCMethod getnewpqraddress()
     auto op_dest = pwallet->GetNewPQRDestination(label, /*v3=*/version == 3);
     if (!op_dest) throw JSONRPCError(RPC_WALLET_ERROR, util::ErrorString(op_dest).original);
     return EncodeDestination(*op_dest);
+},
+    };
+}
+
+RPCMethod dumppqrkey()
+{
+    return RPCMethod{
+        "dumppqrkey",
+        "Reveals the P2QR keypair for an address. TEST/REGTEST USE ONLY.\n",
+        {
+            {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The FRIO P2QR address."},
+        },
+        RPCResult{RPCResult::Type::OBJ, "", "", {
+            {RPCResult::Type::STR_HEX, "pubkey", "public key hex"},
+            {RPCResult::Type::STR_HEX, "seckey", "secret key hex"},
+            {RPCResult::Type::NUM, "witver", "witness version (2=ML-DSA,3=SPHINCS+)"},
+        }},
+        RPCExamples{HelpExampleCli("dumppqrkey", "\"frio1z...\"")},
+        [](const RPCMethod& self, const JSONRPCRequest& request) -> UniValue
+{
+    std::shared_ptr<CWallet> const pwallet = GetWalletForJSONRPCRequest(request);
+    if (!pwallet) return UniValue::VNULL;
+    LOCK(pwallet->cs_wallet);
+    CTxDestination dest = DecodeDestination(request.params[0].get_str());
+    std::vector<unsigned char> prog;
+    int witver = -1;
+    if (auto* wu = std::get_if<WitnessUnknown>(&dest)) {
+        unsigned int v = wu->GetWitnessVersion();
+        if ((v == 2 || v == 3) && wu->GetWitnessProgram().size() == 32) {
+            prog = wu->GetWitnessProgram();
+            witver = (int)v;
+        }
+    } else if (auto* v2 = std::get_if<WitnessV2PQR>(&dest)) { prog.assign(v2->hash.begin(), v2->hash.end()); witver = 2; }
+    else if (auto* v3 = std::get_if<WitnessV3PQR>(&dest)) { prog.assign(v3->hash.begin(), v3->hash.end()); witver = 3; }
+    if (witver < 0) throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "not a P2QR address");
+    const uint256 id = uint256::FromHex("f710c0de00000000000000000000000000000000000000000000000000000001").value();
+    auto* spk = pwallet->GetScriptPubKeyMan(id);
+    if (!spk) throw JSONRPCError(RPC_WALLET_ERROR, "no PQR manager");
+    uint256 program(prog);
+    std::vector<unsigned char> pubkey, seckey;
+    if (!static_cast<PQRScriptPubKeyMan*>(spk)->GetKey(program, pubkey, seckey))
+        throw JSONRPCError(RPC_WALLET_ERROR, "key not found or locked");
+    UniValue r(UniValue::VOBJ);
+    r.pushKV("pubkey", HexStr(pubkey));
+    r.pushKV("seckey", HexStr(seckey));
+    r.pushKV("witver", witver);
+    return r;
 },
     };
 }
