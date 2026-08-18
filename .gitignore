@@ -11,3 +11,4 @@ src/crypto/pq/**/*.req
 .cookie
 *.orig
 /build_win/
+src/kernel/*.bak-*
