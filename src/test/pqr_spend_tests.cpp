@@ -1,4 +1,4 @@
-// FRIO: end-to-end P2QR spend through VerifyScript. Proves a real ML-DSA-65-locked
+// FRIO: end-to-end P2QRH spend through VerifyScript. Proves a real ML-DSA-65-locked
 // output is spendable with a post-quantum witness, unforgeable, and soft-fork-safe.
 #include <script/interpreter.h>
 #include <crypto/pq/pq.h>
@@ -12,14 +12,14 @@ BOOST_FIXTURE_TEST_SUITE(pqr_spend_tests, BasicTestingSetup)
 
 BOOST_AUTO_TEST_CASE(p2qr_v2_end_to_end_spend)
 {
-    // --- key + v2 P2QR output ---
+    // --- key + v2 P2QRH output ---
     std::vector<unsigned char> pk(pq::MLDSA65::PUBKEY_BYTES), sk(pq::MLDSA65::SECKEY_BYTES);
     BOOST_REQUIRE(pq::MLDSA65::keygen(pk.data(), sk.data()));
     std::vector<unsigned char> program(32);
     CSHA256().Write(pk.data(), pk.size()).Finalize(program.data());
     CScript scriptPubKey = CScript() << OP_2 << program;
 
-    // --- funding tx (creates the P2QR output) ---
+    // --- funding tx (creates the P2QRH output) ---
     CAmount amount = 5000000000;
     CMutableTransaction txFrom;
     txFrom.version = 2;
@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(p2qr_v2_end_to_end_spend)
     txTo.vout[0].nValue = 4999000000;
     txTo.vout[0].scriptPubKey = CScript() << OP_2 << program;
 
-    // --- sign the P2QR sighash ---
+    // --- sign the P2QRH sighash ---
     std::vector<CTxOut> spent{txFrom.vout[0]};
     PrecomputedTransactionData cache;
     cache.Init(CTransaction(txTo), std::move(spent), /*force=*/true);
@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE(p2qr_v2_end_to_end_spend)
     // ===== VALID SPEND =====
     bool ok = VerifyScript(emptyScriptSig, scriptPubKey, &witness, flags,
                            MutableTransactionSignatureChecker(&txTo, 0, amount, vtxdata, MissingDataBehavior::ASSERT_FAIL), &err);
-    BOOST_CHECK_MESSAGE(ok, "valid P2QR spend rejected: " << ScriptErrorString(err));
+    BOOST_CHECK_MESSAGE(ok, "valid P2QRH spend rejected: " << ScriptErrorString(err));
 
     // ===== REJECT: tampered signature =====
     {
@@ -105,7 +105,7 @@ BOOST_AUTO_TEST_CASE(p2qr_v2_end_to_end_spend)
         CScriptWitness w = witness; w.stack[0][0] ^= 0xFF;  // even a bad sig passes when unenforced
         BOOST_CHECK_MESSAGE(VerifyScript(emptyScriptSig, scriptPubKey, &w, noflag,
                     MutableTransactionSignatureChecker(&txTo, 0, amount, vtxdata, MissingDataBehavior::ASSERT_FAIL), &e),
-                    "pre-activation P2QR should be anyone-can-spend: " << ScriptErrorString(e));
+                    "pre-activation P2QRH should be anyone-can-spend: " << ScriptErrorString(e));
     }
 }
 

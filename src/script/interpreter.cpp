@@ -1796,7 +1796,7 @@ bool GenericTransactionSignatureChecker<T>::CheckPQRSignature(std::span<const un
     CSHA256().Write(pubkey.data(), pubkey.size()).Finalize(pkhash);
     if (memcmp(pkhash, program.data(), 32) != 0) return false;
 
-    // Compute the FRIO P2QR sighash over the cached tx data.
+    // Compute the FRIO P2QRH sighash over the cached tx data.
     std::vector<unsigned char> prog(program.begin(), program.end());
     uint256 sighash = SignatureHashPQR(*txTo, nIn, witness_version, prog, amount, *txdata);
 
@@ -2059,7 +2059,7 @@ static bool VerifyWitnessProgram(const CScriptWitness& witness, int witversion, 
     } else if (!is_p2sh && CScript::IsPayToAnchor(witversion, program)) {
         return true;
     } else if ((witversion == 2 || witversion == 3) && !is_p2sh) {
-        // FRIO P2QR: v2 = ML-DSA-65, v3 = SPHINCS+-128s. Soft-forked in.
+        // FRIO P2QRH: v2 = ML-DSA-65, v3 = SPHINCS+-128s. Soft-forked in.
         // When SCRIPT_VERIFY_PQR is unset, behave as an unknown witness version
         // (return success) so pre-activation nodes stay consensus-compatible.
         if (!(flags & SCRIPT_VERIFY_PQR)) return set_success(serror);

@@ -146,7 +146,7 @@ enum class script_verify_flag_name : uint8_t {
     // Making unknown public key versions (in BIP 342 scripts) non-standard
     SCRIPT_VERIFY_DISCOURAGE_UPGRADABLE_PUBKEYTYPE,
 
-    // FRIO: enable P2QR post-quantum witness verification (v2 ML-DSA-65, v3 SPHINCS+-128s).
+    // FRIO: enable P2QRH post-quantum witness verification (v2 ML-DSA-65, v3 SPHINCS+-128s).
     SCRIPT_VERIFY_PQR,
     // Constants to point to the highest flag in use. Add new flags above this line.
     //
@@ -275,7 +275,7 @@ public:
 template <class T>
 uint256 SignatureHash(const CScript& scriptCode, const T& txTo, unsigned int nIn, int32_t nHashType, const CAmount& amount, SigVersion sigversion, const PrecomputedTransactionData* cache = nullptr, SigHashCache* sighash_cache = nullptr);
 
-/** FRIO: compute the P2QR (ML-DSA/SPHINCS+) signature hash.
+/** FRIO: compute the P2QRH (ML-DSA/SPHINCS+) signature hash.
  *  Fixed layout: epoch 0x00, SIGHASH_ALL, scriptCode = witness_version||program,
  *  amount committed, reusing the BIP-143 midstate cache. Double-SHA256. */
 template <class T>
@@ -297,7 +297,7 @@ public:
     }
 
     /** FRIO: verify a post-quantum (ML-DSA-65 v2 / SPHINCS+-128s v3) signature over the
-     *  P2QR sighash. pubkey is revealed at spend; caller checks SHA256(pubkey)==program. */
+     *  P2QRH sighash. pubkey is revealed at spend; caller checks SHA256(pubkey)==program. */
     virtual bool CheckPQRSignature(std::span<const unsigned char> sig, std::span<const unsigned char> pubkey,
                                    int witness_version, const std::vector<unsigned char>& program) const
     {

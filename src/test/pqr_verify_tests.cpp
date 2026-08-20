@@ -21,7 +21,7 @@ BOOST_AUTO_TEST_CASE(mldsa65_p2qr_verify_and_reject)
     std::vector<unsigned char> program(32);
     CSHA256().Write(pk.data(), pk.size()).Finalize(program.data());
 
-    // 3. A spending tx whose input spends a v2 P2QR output of `program`, amount `amount`.
+    // 3. A spending tx whose input spends a v2 P2QRH output of `program`, amount `amount`.
     CAmount amount = 5000000000;
     CMutableTransaction tx;
     tx.version = 2;

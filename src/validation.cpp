@@ -2258,8 +2258,8 @@ DisconnectResult Chainstate::DisconnectBlock(const CBlock& block, const CBlockIn
 }
 
 
-/** FRIO: sum the weighted PQC-verification cost of a tx's P2QR inputs. */
-static int64_t CountP2QRVerificationCost(const CTransaction& tx, const CCoinsViewCache& view)
+/** FRIO: sum the weighted PQC-verification cost of a tx's P2QRH inputs. */
+static int64_t CountP2QRHVerificationCost(const CTransaction& tx, const CCoinsViewCache& view)
 {
     if (tx.IsCoinBase()) return 0;
     int64_t cost = 0;
@@ -2599,7 +2599,7 @@ bool Chainstate::ConnectBlock(const CBlock& block, BlockValidationState& state, 
             break;
         }
         // FRIO: enforce the per-block post-quantum verification budget (DoS protection).
-        nPQRVerifyCost += CountP2QRVerificationCost(tx, view);
+        nPQRVerifyCost += CountP2QRHVerificationCost(tx, view);
         if (nPQRVerifyCost > MAX_BLOCK_PQR_VERIFICATION_COST) {
             state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-blk-pqr-budget", "too many post-quantum verifications");
             break;

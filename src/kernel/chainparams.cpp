@@ -130,7 +130,7 @@ public:
         // FRIO: all buried soft forks active from the start of the chain.
         // BIP34 at height 1 with an empty hash disables the hash-match assertion
         // (same pattern as testnet/regtest). Segwit active from genesis is required
-        // for the P2QR (witness v2/v3) address types to validate.
+        // for the P2QRH (witness v2/v3) address types to validate.
         consensus.BIP34Height = 1;
         consensus.BIP34Hash = uint256{};
         consensus.BIP65Height = 1;

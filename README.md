@@ -7,8 +7,8 @@ A quantum-resistant cryptocurrency forked from Bitcoin Core.
 
 Friotaíoch adds post-quantum digital signatures to a Bitcoin-derived chain, so
 coins can be received and spent using signature schemes believed to resist
-attacks by large-scale quantum computers. It introduces **Pay-to-Quantum-Resistant
-(P2QR)** outputs backed by NIST-standardised signatures:
+attacks by large-scale quantum computers. It introduces **Pay-to-Quantum-Resistant-Hash
+(P2QRH)** outputs backed by NIST-standardised signatures:
 
 - **ML-DSA-65** (FIPS 204) — witness version 2 (`friort1z…` / `frio1z…`)
 - **SPHINCS+-SHA2-128s** / SLH-DSA (FIPS 205) — witness version 3
@@ -42,8 +42,8 @@ Key parameters
 Post-quantum features
 ----------------------
 
-- P2QR consensus (`SCRIPT_VERIFY_PQR`), enforced from genesis.
-- Native PQC wallet: generate P2QR addresses (`getnewpqraddress`), receive,
+- P2QRH consensus (`SCRIPT_VERIFY_PQR`), enforced from genesis.
+- Native PQC wallet: generate P2QRH addresses (`getnewpqraddress`), receive,
   persist, encrypt at rest, sign, and spend.
 - Per-block PQC verification budget for denial-of-service protection.
 

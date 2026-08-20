@@ -1,4 +1,4 @@
-// FRIO: verify a COMPLETE browser-produced P2QR spend — JS sighash + WASM signature —
+// FRIO: verify a COMPLETE browser-produced P2QRH spend — JS sighash + WASM signature —
 // against the node's own SignatureHashPQR + verifier. End-to-end consensus proof.
 #include <crypto/pq/pq.h>
 #include <crypto/sha256.h>
@@ -43,6 +43,6 @@ BOOST_AUTO_TEST_CASE(full_spend) {
     // 3. node verifies the WASM signature over the node sighash
     bool ok = pq::MLDSA65::verify(sig.data(), sig.size(), node_sh.data(), 32, pubkey.data());
     BOOST_CHECK_MESSAGE(ok, "node REJECTED the WASM signature over its own sighash");
-    if (ok) BOOST_TEST_MESSAGE("SUCCESS: node accepts complete browser-produced P2QR spend");
+    if (ok) BOOST_TEST_MESSAGE("SUCCESS: node accepts complete browser-produced P2QRH spend");
 }
 BOOST_AUTO_TEST_SUITE_END()

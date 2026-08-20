@@ -368,7 +368,7 @@ QString AddressTableModel::addRow(const QString &type, const QString &label, con
     }
     else if(type == Receive)
     {
-        // FRIO: P2QR sentinel types (1000=ML-DSA v2, 1001=SPHINCS+ v3)
+        // FRIO: P2QRH sentinel types (1000=ML-DSA v2, 1001=SPHINCS+ v3)
         int at = (int)address_type;
         if (at == 1000 || at == 1001) {
             if (auto dest{walletModel->wallet().getNewPQRDestination(strLabel, /*v3=*/at == 1001)}) {

@@ -96,7 +96,7 @@ public:
     // Get a new address.
     virtual util::Result<CTxDestination> getNewDestination(OutputType type, const std::string& label) = 0;
 
-    //! Get new post-quantum (P2QR) destination.
+    //! Get new post-quantum (P2QRH) destination.
     virtual util::Result<CTxDestination> getNewPQRDestination(const std::string& label, bool v3) = 0;
 
     //! Get public key.
