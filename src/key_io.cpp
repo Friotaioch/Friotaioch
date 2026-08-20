@@ -200,11 +200,11 @@ CTxDestination DecodeDestination(const std::string& str, const CChainParams& par
                 return PayToAnchor();
             }
 
-            // FRIO: witness v2 (ML-DSA-65) and v3 (SPHINCS+-128s) P2QR programs are a
+            // FRIO: witness v2 (ML-DSA-65) and v3 (SPHINCS+-128s) P2QRH programs are a
             // 32-byte SHA256(pubkey) commitment. Reject any other length at decode so
             // an unspendable frio1 address can never be produced.
             if ((version == 2 || version == 3) && data.size() != 32) {
-                error_str = "Invalid FRIO P2QR (v2/v3) program length; must be 32 bytes";
+                error_str = "Invalid FRIO P2QRH (v2/v3) program length; must be 32 bytes";
                 return CNoDestination{};
             }
             if (version > 16) {

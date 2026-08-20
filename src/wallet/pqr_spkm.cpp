@@ -17,7 +17,7 @@ namespace wallet {
 util::Result<CTxDestination> PQRScriptPubKeyMan::GetNewDestination(const OutputType type)
 {
     if (m_storage.HasEncryptionKeys() && m_storage.IsLocked()) {
-        return util::Error{Untranslated("FRIO: wallet locked; unlock to generate a P2QR key")};
+        return util::Error{Untranslated("FRIO: wallet locked; unlock to generate a P2QRH key")};
     }
     PQRKey k;
     if (m_mint_v3) {
@@ -62,7 +62,7 @@ util::Result<CTxDestination> PQRScriptPubKeyMan::GetNewDestination(const OutputT
         LOCK(cs_pqr);
         m_keys[program] = k;
     }
-    // v2 P2QR destination -> frio1... (bech32m)
+    // v2 P2QRH destination -> frio1... (bech32m)
     if (m_mint_v3) {
         WitnessV3PQR dest{program};
         return CTxDestination{dest};

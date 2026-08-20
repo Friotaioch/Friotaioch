@@ -1,4 +1,4 @@
-// FRIO: Stage-0 golden vector export. Dumps deterministic P2QR test vectors to
+// FRIO: Stage-0 golden vector export. Dumps deterministic P2QRH test vectors to
 // stdout as JSON so the WASM signer can be verified byte-for-byte.
 #include <script/interpreter.h>
 #include <crypto/pq/pq.h>

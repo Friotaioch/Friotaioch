@@ -1311,7 +1311,7 @@ BOOST_AUTO_TEST_CASE(spends_witness_prog)
     const auto program{ToByteVector(XOnlyPubKey{pubkey})};
     for (int i{2}; i <= 16; ++i) {
         tx_create.vout[0].scriptPubKey = GetScriptForDestination(WitnessUnknown{i, program});
-        // FRIO: witness v2/v3 are now first-class P2QR types (32-byte program);
+        // FRIO: witness v2/v3 are now first-class P2QRH types (32-byte program);
         // versions 4-16 remain WITNESS_UNKNOWN.
         const TxoutType expected_wit = (i == 2) ? TxoutType::WITNESS_V2_PQR
                                      : (i == 3) ? TxoutType::WITNESS_V3_PQR

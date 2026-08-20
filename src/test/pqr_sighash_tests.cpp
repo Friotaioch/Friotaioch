@@ -1,4 +1,4 @@
-// FRIO: P2QR sighash byte-layout proof. Asserts determinism, and that mutating
+// FRIO: P2QRH sighash byte-layout proof. Asserts determinism, and that mutating
 // any committed field changes the hash (i.e. the field is actually bound).
 #include <script/interpreter.h>
 #include <primitives/transaction.h>

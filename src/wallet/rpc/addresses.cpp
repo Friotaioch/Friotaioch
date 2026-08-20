@@ -74,10 +74,10 @@ RPCMethod getnewpqraddress()
 {
     return RPCMethod{
         "getnewpqraddress",
-        "Returns a new FRIO post-quantum (P2QR, ML-DSA-65 witness v2) receive address.\n",
+        "Returns a new FRIO post-quantum (P2QRH, ML-DSA-65 witness v2) receive address.\n",
         {
             {"label", RPCArg::Type::STR, RPCArg::Default{""}, "The label to link to this address."},
-            {"version", RPCArg::Type::STR, RPCArg::Default{"2"}, "P2QR witness version: 2 = ML-DSA-65, 3 = SPHINCS+-128s."},
+            {"version", RPCArg::Type::STR, RPCArg::Default{"2"}, "P2QRH witness version: 2 = ML-DSA-65, 3 = SPHINCS+-128s."},
         },
         RPCResult{RPCResult::Type::STR, "address", "The new FRIO post-quantum address"},
         RPCExamples{HelpExampleCli("getnewpqraddress", "") + HelpExampleRpc("getnewpqraddress", "")},
@@ -103,9 +103,9 @@ RPCMethod dumppqrkey()
 {
     return RPCMethod{
         "dumppqrkey",
-        "Reveals the P2QR keypair for an address. TEST/REGTEST USE ONLY.\n",
+        "Reveals the P2QRH keypair for an address. TEST/REGTEST USE ONLY.\n",
         {
-            {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The FRIO P2QR address."},
+            {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The FRIO P2QRH address."},
         },
         RPCResult{RPCResult::Type::OBJ, "", "", {
             {RPCResult::Type::STR_HEX, "pubkey", "public key hex"},
@@ -129,7 +129,7 @@ RPCMethod dumppqrkey()
         }
     } else if (auto* v2 = std::get_if<WitnessV2PQR>(&dest)) { prog.assign(v2->hash.begin(), v2->hash.end()); witver = 2; }
     else if (auto* v3 = std::get_if<WitnessV3PQR>(&dest)) { prog.assign(v3->hash.begin(), v3->hash.end()); witver = 3; }
-    if (witver < 0) throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "not a P2QR address");
+    if (witver < 0) throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "not a P2QRH address");
     const uint256 id = uint256::FromHex("f710c0de00000000000000000000000000000000000000000000000000000001").value();
     auto* spk = pwallet->GetScriptPubKeyMan(id);
     if (!spk) throw JSONRPCError(RPC_WALLET_ERROR, "no PQR manager");
