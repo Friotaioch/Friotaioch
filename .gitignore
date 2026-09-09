@@ -12,3 +12,7 @@ src/crypto/pq/**/*.req
 *.orig
 /build_win/
 src/kernel/*.bak-*
+
+# Build artifacts - never commit release binaries
+Friotaioch-*-win64.zip
+Friotaioch-*-linux64.tar.gz
