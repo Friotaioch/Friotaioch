@@ -87,7 +87,9 @@ std::unordered_set<CScript, SaltedSipHasher> PQRScriptPubKeyMan::GetScriptPubKey
     std::unordered_set<CScript, SaltedSipHasher> out;
     LOCK(cs_pqr);
     for (const auto& [program, key] : m_keys) {
-        out.insert(CScript() << OP_2 << ToByteVector(program));
+        // FRIO: emit the correct witness version per key (v2=ML-DSA/OP_2, v3=SPHINCS+/OP_3)
+        opcodetype op = (key.algo == 3) ? OP_3 : OP_2;
+        out.insert(CScript() << op << ToByteVector(program));
     }
     return out;
 }
