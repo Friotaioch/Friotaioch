@@ -422,9 +422,15 @@ void CoinControlDialog::updateLabels(CCoinControl& m_coin_control, WalletModel *
             } else if (witnessversion == 1) { // P2TR key-path spend
                 // 1 WU (witness item count) + 65 WU (Schnorr signature with len byte)
                 nBytesInputs += 66 / WITNESS_SCALE_FACTOR;
+            } else if (witnessversion == 2 && witnessprogram.size() == 32) { // FRIO: P2QR ML-DSA-65
+                // witness: sig 3309 + pubkey 1952 + stack/length overhead
+                nBytesInputs += 5432 / WITNESS_SCALE_FACTOR;
+            } else if (witnessversion == 3 && witnessprogram.size() == 32) { // FRIO: P2QR SPHINCS+-128s
+                // witness: sig 7856 + pubkey 32 + stack/length overhead
+                nBytesInputs += 8000 / WITNESS_SCALE_FACTOR;
             } else {
-                // not supported, should be unreachable
-                throw std::runtime_error("Trying to spend future segwit version script");
+                // Unknown/future witness version: skip byte estimate rather than crash the GUI.
+                nBytesInputs += 107 / WITNESS_SCALE_FACTOR;
             }
             fWitness = true;
         }
